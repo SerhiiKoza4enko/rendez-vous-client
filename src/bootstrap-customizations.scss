@@ -1,0 +1,143 @@
+*,
+html,
+body {
+  outline: none !important;
+}
+
+.btn:not(.withoutripple),
+.card-image:not(.withoutripple),
+.navbar a:not(.withoutripple),
+.dropdown-menu a:not(.withoutripple),
+.nav-tabs a:not(.withoutripple),
+.withripple,
+.pagination li:not(.active):not(.disabled) a:not(.withoutripple),
+.waves-effect:not(.withoutripple) {
+  position: relative;
+}
+
+.btn {
+  &,
+  &:visited,
+  &:hover,
+  &:focus,
+  &:active {
+    border-width: 0 !important;
+  }
+
+  &:not(.btn-raised) {
+    background-color: transparent;
+
+    &,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active {
+      &.btn-primary {
+        color: $brand-primary;
+      }
+
+      &.btn-success {
+        color: $brand-success;
+      }
+
+      &.btn-danger {
+        color: $brand-danger;
+      }
+
+      &.btn-warning {
+        color: $brand-warning;
+      }
+
+      &.btn-info {
+        color: $brand-info;
+      }
+    }
+
+    &.btn-fab {
+      &,
+      &:visited,
+      &:hover,
+      &:focus,
+      &:active {
+        &.btn-primary {
+          background-color: $brand-primary;
+          color: #fff;
+        }
+
+        &.btn-success {
+          background-color: $brand-success;
+          color: #fff;
+        }
+
+        &.btn-danger {
+          background-color: $brand-danger;
+          color: #fff;
+        }
+
+        &.btn-warning {
+          background-color: $brand-warning;
+          color: #fff;
+        }
+
+        &.btn-info {
+          background-color: $brand-info;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.btn,
+.input-group-btn .btn {
+  margin: 0;
+}
+
+.modal-content .modal-footer button + button {
+  margin: 0;
+}
+
+.list-group .list-group-item {
+  padding: 0.75rem 1.25rem;
+}
+
+.tooltip.in.tooltip-bottom-left > .tooltip-inner {
+  max-width: 500px;
+}
+
+.form-control.form-control-sm {
+  height: auto;
+}
+
+.list-group .list-group-item.list-group-item-action {
+  margin-bottom: 0;
+
+  &:first-of-type {
+    border-top: 1px solid #ddd !important;
+  }
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #ddd !important;
+  }
+}
+
+.input-group-btn:not(:first-child) > .btn.btn-fab {
+  border-radius: 50%;
+}
+
+tr,
+a {
+  .img.img-rounded-circle-hover {
+    @extend .rounded-circle;
+    transition: 300ms border-radius;
+  }
+
+  &:hover .img.img-rounded-circle-hover {
+    @extend .rounded;
+    border-radius: 3px;
+  }
+}
+
+.fr-popup {
+  z-index: 1300 !important;
+}

@@ -1,0 +1,41 @@
+section.foreign-modal(tjsMaterialize)
+  form(
+    '(ngSubmit)'='addForeign()'
+    '#foreignForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Создать статью
+    .modal-body
+      .form-group.label-floating
+        label.control-label(for='description') Статья
+        app-tinymce#description(
+          name='description'
+          '[formControl]'='content'
+        )
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='addForeign()'
+        '[disabled]'='!foreignForm.form.valid'
+      )
+        i.fa.fa-fw.fa-floppy-o
+        | &nbsp;
+        | Сохранить

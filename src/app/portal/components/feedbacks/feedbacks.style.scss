@@ -1,0 +1,25 @@
+ .feedbacks {
+   blockquote {
+     border-left: 0.25rem solid #e8b81a;
+     background: #fff;
+   }
+
+   .card {
+     background-color: transparent;
+     box-shadow: none;
+     border: 0;
+     &>.img-wrapper {
+       text-align: center;
+       height: 125px;
+       &>img {
+         width: 100px;
+         height: 100px;
+       }
+     }
+   }
+
+   .add-button {
+     text-align: center;
+     margin-top: 20px;
+   }
+ }

@@ -1,0 +1,20 @@
+section.contacts(tjsMaterialize)
+  sebm-google-map(
+    '[latitude]'='lat'
+    '[longitude]'='lng'
+    '[zoom]'='16'
+    '[streetViewControl]'='false'
+    '[scrollwheel]'='false'
+  )
+    sebm-google-map-marker(
+      '*ngFor'='let contact of contacts'
+      '[latitude]'='contact.latitude'
+      '[longitude]'='contact.longitude'
+    )
+      sebm-google-map-info-window(
+        '[isOpen]'='true'
+        '[disableAutoPan]'='true'
+      )
+        div(
+          '[innerHTML]'='contact.contacts'
+        )

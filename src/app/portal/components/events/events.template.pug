@@ -1,0 +1,23 @@
+section.events(tjsMaterialize)
+  .no-content.center('*ngIf'='!events || !events.length')
+    i.fa.fa-info-circle
+    | Здесь пока нет никаких новостей!
+  owl-carousel(
+    'owlElement'
+    '[options]'='owlOptions'
+    '[items]'='events'
+    '[carouselClasses]'='["owl-theme", "owl-carousel"]'
+  )
+    .card('*ngFor'='let event of events')
+      .row.px-1.py-1
+        .col-xs-12
+          blockquote.blockquote(
+            '(mouseenter)'='disableScroll()'
+            '(mouseleave)'='enableScroll()'
+          )
+            h2 {{ event.subject }}
+            p.mb-0('[innerHTML]'='event.description | mySafeHtml')
+            footer.blockquote-footer
+              | {{ event.user.lastname }} {{ event.user.firstname }}
+              | &nbsp;
+              cite {{ event.updatedAt | date: 'dd/MM/y HH:mm' }}

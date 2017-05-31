@@ -1,0 +1,82 @@
+section.profile(tjsMaterialize)
+  form(
+    '(ngSubmit)'='updateUser()'
+    '#profileForm'='ngForm'
+  )
+    .modal-body
+      .col-xs-12.text-xs-center
+        button.close(
+          type='button'
+          role='button'
+          aria-label='Close'
+          '(click)'='modalInstance.dismiss()'
+        )
+          span(aria-hidden='true') ×
+        img.img-responsive(
+          [src]='"../../assets/images/logo.png"'
+          alt='Rendez Vous'
+        )
+      .container-fluid.text-xs-left
+        .row
+          .col-xs-12
+            .card-block.text-xs-center.pa-0
+              h4.card-title Профиль
+            .row
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='role') Имя
+                  input#firstname.form-control(
+                    name='firstname'
+                    type='text'
+                    '[(ngModel)]'='user.firstname'
+                    '#firstname'='ngModel'
+                    required
+                  )
+                  small.text-danger('*ngIf'='!firstname.valid && !firstname.pristine')
+                    span('*ngIf'='firstname.errors?.required') Введите имя.
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='lastname') Фамилия
+                  input#lastname.form-control(
+                    name='lastname'
+                    type='text'
+                    '[(ngModel)]'='user.lastname'
+                    '#lastname'='ngModel'
+                  )
+            .row
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='email') Email
+                  input#email.form-control(
+                    name='email'
+                    type='email'
+                    '[(ngModel)]'='user.email'
+                    '#email'='ngModel'
+                    required
+                    email
+                  )
+                  small.text-danger('*ngIf'='!email.valid && !email.pristine')
+                    span('*ngIf'='email.errors?.required') Введите email.
+                    span('*ngIf'='email.errors?.email') Некорректный email.
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='phone') Телефон
+                  input#phone.form-control(
+                    name='phone'
+                    type='text'
+                    '[(ngModel)]'='user.phone'
+                    '[textMask]'='{mask: phoneMask, guide: true}'
+                    '#phone'='ngModel'
+                  )
+                  small.text-danger('*ngIf'='!phone.valid')
+                    span Некорректный телефон.
+    .modal-footer
+      .card-block.pt-0.pl-1.pr-1.text-xs-left
+        button.btn.btn-success.float-xs-right(
+          type='submit'
+          role='button'
+          '[disabled]'='!profileForm.form.valid'
+        )
+          i.fa.fa-save
+          | &nbsp;
+          | Сохранить

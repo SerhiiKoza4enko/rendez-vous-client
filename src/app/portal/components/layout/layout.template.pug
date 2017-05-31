@@ -1,0 +1,225 @@
+section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
+  header
+    nav.navbar.navbar-full.navbar-fixed-top.navbar-animated.navbar-header-menu.navbar-top
+      .clearfix
+      #header-menu.navbar-toggleable-md
+        .navbar-body
+          .center
+            a.navbar-brand.hidden-md-down.logo(routerLink='/')
+              img.img.img-responsive.img-glow(
+                [src]='"../../assets/images/text.png"'
+                alt='Rendez Vous'
+              )
+            ul.nav.navbar-nav.cl-effect
+              li.nav-item.menu-item(data-menuanchor='main')
+                a.nav-link.line-height-1.pointer(href='#main')
+                  | Творческоe
+                  | пространство
+              li.nav-item.menu-item('data-menuanchor'='events')
+                a.nav-link(href='#events')
+                  | Мероприятия
+              li.nav-item.menu-item(data-menuanchor='foreign')
+                a.nav-link.line-height-1.pointer(href='#foreign')
+                  | Иноязычное
+                  | пространство
+              li.nav-item.menu-item(data-menuanchor='contacts')
+                a.nav-link(href='#contacts')
+                  | Контакты
+              li.nav-item.menu-item(data-menuanchor='feedbacks')
+                a.nav-link(href='#feedbacks')
+                  | Отзывы
+              li.nav-item.menu-item(
+                '*ngIf'='user && user?.role !== "admin"'
+                data-menuanchor='booking'
+              )
+                a.nav-link(href='#booking')
+                  | Бронирование
+              li.nav-item.menu-item(data-menuanchor='gallery')
+                a.nav-link(href='#gallery')
+                  | Галерея
+              li.nav-item.menu-item(
+                '*ngIf'='user?.role === "admin"'
+                routerLinkActive='active'
+              )
+                a.nav-link.line-height-1(routerLink='/admin')
+                  | Админ
+                  | панель
+              li.nav-item(
+                routerLinkActive='active'
+                '*ngIf'="user"
+              )
+                a.nav-link.user-profile-link(
+                  role='button'
+                  '(click)'='profile()'
+                )
+                  .img.img-avatar.img-rounded-circle-hover(
+                    '[ngStyle]'='{ backgroundImage: "url(\'" + user.picture + "\')" }'
+                  )
+                  span.username
+                    | &nbsp;
+                    strong {{ user.firstname || user.login }}
+              li.nav-item('*ngIf'='user')
+                a.nav-link.pointer(
+                  '(click)'='logout()'
+                  ngbTooltip='Sign Out'
+                  placement='left'
+                  container='body'
+                )
+                  i.fa.fa-sign-out
+              li.nav-item('*ngIf'='!user')
+                form.text-xs-center.text-xs-center.float-lg-right.login-buttons('*ngIf'='!user')
+                  a.btn.align-middle.mt-1.mb-1.mr-1(
+                    type='button'
+                    role='button'
+                    '(click)'='signIn()'
+                  ) Вход
+                  a.btn.align-middle.mt-1.mb-1(
+                    type='button'
+                    role='button'
+                    '(click)'='signUp()'
+                  ) Регистрация
+  .content-body
+    div(
+      '[mnFullpage]'='options'
+      '[mnFullpageNavigation]'='true'
+      '[mnFullpageShowActiveTooltip]'='true'
+      '[mnFullpageKeyboardScrolling]'='true'
+      '[mnFullpageSlidesNavigation]'='true'
+      '[mnFullpageNavigationPosition]'='"right"'
+      '[mnFullpageOnLeave]'='onPageChanged'
+      '*ngIf'='user && user.role !== "admin"'
+    )
+      .section.fp-section.fp-table(
+        'data-tooltip'='Творческое пространство'
+        'data-anchor'='main'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.fullheight
+              .col-xs
+                div(
+                  '[innerHTML]'='pages.about | mySafeHtml'
+                  '*ngIf'='pages'
+                )
+      .section.fp-section.fp-table(
+        'data-tooltip'='Мероприятия'
+        'data-anchor'='events'
+      )  
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                events
+      .section.fp-section.fp-table(
+        'data-tooltip'='Иноязычное пространство'
+        'data-anchor'='foreign'
+      )  
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                foreigns
+      .section.fp-section.fp-table(
+        'data-tooltip'='Контакты'
+        'data-anchor'='contacts'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                contacts
+      .section.fp-section.fp-table(
+        'data-tooltip'='Отзывы'
+        'data-anchor'='feedbacks'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                feedbacks
+      .section.fp-section.fp-table(
+        'data-tooltip'='Галерея'
+        'data-anchor'='gallery'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                gallery
+      .section.fp-section.fp-table(
+        'data-tooltip'='Бронирование'
+        'data-anchor'='booking'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                booking
+    div(
+      '[mnFullpage]'='options'
+      '[mnFullpageNavigation]'='true'
+      '[mnFullpageShowActiveTooltip]'='true'
+      '[mnFullpageKeyboardScrolling]'='true'
+      '[mnFullpageSlidesNavigation]'='true'
+      '[mnFullpageNavigationPosition]'='"right"'
+      '[mnFullpageOnLeave]'='onPageChanged'
+      '*ngIf'='!user || user?.role === "admin"'
+    )
+      .section.fp-section.fp-table(
+        'data-tooltip'='Творческое пространство'
+        'data-anchor'='main'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.fullheight
+              .col-xs
+                div(
+                  '*ngIf'='pages'
+                  '[innerHTML]'='pages.about | mySafeHtml'
+                )
+      .section.fp-section.fp-table(
+        'data-tooltip'='Мероприятия'
+        'data-anchor'='events'
+      )  
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                events
+      .section.fp-section.fp-table(
+        'data-tooltip'='Иноязычное пространство'
+        'data-anchor'='foreign'
+      )  
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                foreigns
+      .section.fp-section.fp-table(
+        'data-tooltip'='Контакты'
+        'data-anchor'='contacts'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                contacts
+      .section.fp-section.fp-table(
+        'data-tooltip'='Отзывы'
+        'data-anchor'='feedbacks'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                feedbacks
+      .section.fp-section.fp-table(
+        'data-tooltip'='Галерея'
+        'data-anchor'='gallery'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                gallery
+    

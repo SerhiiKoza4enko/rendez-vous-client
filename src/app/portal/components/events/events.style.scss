@@ -1,0 +1,24 @@
+.events {
+  blockquote {
+    border-left: 0.25rem solid #F36523;
+    background: #fff;
+    max-height: 620px;
+    overflow-y: auto;
+  }
+  .card {
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+    &>.img-wrapper {
+      text-align: center;
+      height: 125px;
+      &>img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+  img {
+    width: auto !important;
+  }
+}

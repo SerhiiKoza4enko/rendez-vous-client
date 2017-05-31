@@ -1,0 +1,65 @@
+section.feedback-modal(tjsMaterialize)
+  form(
+    '(ngSubmit)'='addFeedback()'
+    '#feedbackForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Отзыв
+    .modal-body
+      .form-group.rating-div
+        rating(
+          name='mark'
+          '[(ngModel)]'='feedback.mark'
+          '[max]'='5'
+          '[readonly]'='true'
+          '#mark'='ngModel'
+        )
+      .form-group.label-floating
+        label.control-label(for='description') Автор
+        span {{ feedback.user.lastname }} {{ feedback.user.firstname }}
+      .form-group.label-floating
+        label.control-label(for='description') Отзыв
+        textarea#description.form-control(
+          tjsAutosize
+          name='description'
+          type='text'
+          '[(ngModel)]'='feedback.description'
+          readonly
+          '#description'='ngModel'
+        )
+        small.text-danger('*ngIf'='!description.valid && !description.pristine')
+          span('*ngIf'='description.errors?.required') Введите отзыв.
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-danger(
+        type='button'
+        role='button'
+        '(click)'='forbid()'
+      )
+        i.fa.fa-fw.fa-lock
+        | &nbsp;
+        | Запретить
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='allow()'
+      )
+        i.fa.fa-fw.fa-unlock
+        | &nbsp;
+        | Разрешить

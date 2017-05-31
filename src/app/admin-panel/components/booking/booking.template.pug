@@ -1,0 +1,60 @@
+section.booking(tjsMaterialize)
+  h3.center {{ viewDate | calendarDate:(view + 'ViewTitle'):'ru' }}      
+  .row
+    .col-xs-1
+      .nav-button.prev-month(
+        'mwlCalendarPreviousView'
+        '[view]'='view',
+        '[(viewDate)]'='viewDate'
+        '(click)'='loadBookings()'
+        '*ngIf'='view === "month"'
+      )
+      .nav-button.prev-month(
+        '(click)'='view="month"'
+        '*ngIf'='view === "day"'
+      )
+    .col-xs-10.background-white
+      .form-group.label-floating('*ngIf'='view === "day"')
+        label.control-label(for='room') Комната
+        select#room.form-control(
+          name='room'
+          '[(ngModel)]'='selectedRoom'
+          '#room'='ngModel'
+          required
+          '(change)'='fillDayEvents()'
+        )
+          option(
+            '*ngFor'='let room of rooms'
+            '[ngValue]'='room.id'
+          ) {{ room.name }}
+      div('[ngSwitch]'='view')
+        mwl-calendar-month-view(
+          *ngSwitchCase="'month'"
+          '[viewDate]'='viewDate'
+          '[events]'='events'
+          '[locale]'='"ru"'
+          '[weekStartsOn]'='weekStartsOn'
+          '[dayModifier]'='dayModifier'
+          '(dayClicked)'='daySelect($event.day.date)'
+        )
+        mwl-calendar-day-view(
+          *ngSwitchCase='"day"'
+          '[viewDate]'='viewDate'
+          '[events]'='dayEvents'
+          '[locale]'='"ru"'
+          '[dayStartHour]'='startHours'
+          '[dayEndHour]'='endHours'
+          '(hourSegmentClicked)'='timeSelect($event)'
+          '(eventClicked)'='eventClicked($event)'
+          '(mouseenter)'='disableScroll()'
+          '(mouseleave)'='enableScroll()'
+        )
+    .col-xs-1
+      .nav-button.next-month(
+        'mwlCalendarNextView'
+        '[view]'='view',
+        '[(viewDate)]'='viewDate'
+        '(click)'='loadBookings()'
+        '*ngIf'='view === "month"'
+      )
+  .row

@@ -1,0 +1,30 @@
+section.foreigns(tjsMaterialize)
+  .no-content.center('*ngIf'='!foreigns || !foreigns.length')
+    i.fa.fa-info-circle
+    | Здесь пока нет никаких новостей! Вы можете быть первым!
+  owl-carousel(
+    'owlElement'
+    '[options]'='owlOptions'
+    '[items]'='foreigns'
+    '[carouselClasses]'='["owl-theme", "owl-carousel"]'
+  )
+    .card('*ngFor'='let foreign of foreigns')
+      .row.px-1.py-1
+        .col-xs-12
+          blockquote.blockquote(
+            '(mouseenter)'='disableScroll()'
+            '(mouseleave)'='enableScroll()'
+          )
+            p.mb-0('[innerHTML]'='foreign.description | mySafeHtml')
+            footer.blockquote-footer
+              | {{ foreign.user.lastname }} {{ foreign.user.firstname }}
+              | &nbsp;
+              cite {{ foreign.createdAt | date: 'dd/MM/y HH:mm' }}
+  .add-button(*ngIf='user && user.id != ""')
+    button.btn.btn-success.btn-raised(
+      role='button'
+      '(click)'='addForeign()'
+    )
+      i.fa.fa-plus
+      | &nbsp;
+      | Предложить статью

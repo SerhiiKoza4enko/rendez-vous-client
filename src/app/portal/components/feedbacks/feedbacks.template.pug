@@ -1,0 +1,40 @@
+section.feedbacks(tjsMaterialize)
+  .no-content.center('*ngIf'='!feedbacks || !feedbacks.length')
+    i.fa.fa-info-circle
+    | Здесь пока никто не оставил свой отзыв. Вы можете быть первым!
+  owl-carousel(
+    '[options]'='owlOptions'
+    '[items]'='feedbacks'
+    '[carouselClasses]'='["owl-theme", "owl-carousel"]'
+  )
+    .card('*ngFor'='let feedback of feedbacks')
+      .img-wrapper
+        img.card-img-top.rounded-circle.mx-auto(
+          '[src]'='feedback.user.picture'
+        )
+      blockquote.blockquote
+        .float-xs-right(*ngIf='feedback.user.id===user.id')
+          button.btn.btn-danger.btn-fab(
+            '(click)'='remove(feedback, $event)'
+            ngbTooltip='Удалить отзыв'
+            placement='top'
+            container='body'
+          )
+            i.fa.fa-trash
+        rating(
+          *ngIf='feedback.mark > 0'
+          '[(ngModel)]'='feedback.mark'
+          '[max]'='5',
+          '[readonly]'='true'
+        )
+        p.mb-0 {{ feedback.description }}
+        footer.blockquote-footer
+          | {{ feedback.user.lastname }} {{ feedback.user.firstname }}
+  .add-button(*ngIf='user && user.id != ""')
+    button.btn.btn-success.btn-raised(
+      role='button'
+      '(click)'='addFeedback()'
+    )
+      i.fa.fa-plus
+      | &nbsp;
+      | Оставить отзыв

@@ -1,0 +1,55 @@
+section.admin-foreign-modal(tjsMaterialize)
+  form(
+    '#foreignForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Статья
+    .modal-body
+      .form-group.label-floating
+        label.control-label Автор
+        span {{ foreign.user.lastname }} {{ foreign.user.firstname }}
+      .form-group.label-floating
+        label.control-label Статья
+        div('[innerHTML]'='foreign.description | mySafeHtml')
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-info(
+        type='button'
+        role='button'
+        '(click)'='share()'
+      )
+        i.fa.fa-fw.fa-facebook
+        | &nbsp;
+        | Фейсбук
+      button.btn.btn-danger(
+        type='button'
+        role='button'
+        '(click)'='forbid()'
+      )
+        i.fa.fa-fw.fa-lock
+        | &nbsp;
+        | Запретить
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='allow()'
+      )
+        i.fa.fa-fw.fa-unlock
+        | &nbsp;
+        | Разрешить

@@ -1,0 +1,18 @@
+section.gallery(tjsMaterialize)
+  .no-content.center('*ngIf'='!photos || !photos.length')
+    i.fa.fa-info-circle
+    | Здесь пока нет никаких фото!
+  owl-carousel(
+    'owlElement'
+    '[options]'='owlOptions'
+    '[items]'='photos'
+    '[carouselClasses]'='["owl-theme", "owl-carousel"]'
+  )
+    .photo('*ngFor'='let photo of photos')
+      .row.px-1.py-1
+        .col-xs-12
+          blockquote.blockquote('align'='center')
+            h2 {{ photo.description }}
+            img(
+              '[src]'='photo.image'
+            )

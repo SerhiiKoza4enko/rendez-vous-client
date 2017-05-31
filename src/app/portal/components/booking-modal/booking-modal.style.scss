@@ -1,0 +1,28 @@
+ .booking-modal {
+   width: 600px;
+   .days-div {
+     margin-left: 0;
+   }
+   .day-picker {
+     margin-right: 20px;
+   }
+   ngb-datepicker {
+     display: inline-block !important;
+     text-align: center !important;
+   }
+   .ngb-dp-weekday {
+     display: inline-block !important;
+   }
+   .ngb-dp-day {
+     display: inline-block !important;
+   }
+   .ngb-dp-header {
+     display: inline-block;
+     width: 100%;
+   }
+   ngb-datepicker-navigation {
+     & > button,ngb-datepicker-navigation-select {
+       display: inline-block !important;
+     }
+   }
+ }

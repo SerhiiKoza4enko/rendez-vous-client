@@ -1,0 +1,14 @@
+section.admin-foreigns(tjsMaterialize)
+  ag-grid-angular.ag-material.data-grid(
+    '[rowData]'='foreigns'
+    '[gridOptions]'='gridOptions'
+    '(gridReady)'='onGridReady($event)'
+    '(rowClicked)'='onRowClicked($event)'
+  )
+  .row.center
+    .col-xs.center
+      ngb-pagination.center(
+        '[collectionSize]'='foreigns?.length'
+        '[(page)]'="page"
+        '(pageChange)'='pageChanged(page)'
+      )

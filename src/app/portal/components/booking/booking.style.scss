@@ -1,0 +1,93 @@
+$tjs-light: #C4A27D;
+$tjs-dark: #023320;
+.booking {
+  .nav-button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin-top: -38px;
+    -webkit-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  .prev-month {
+    left: 15px;
+    width: 0;
+    border-width: 38.5px 34px 38.5px 0;
+    border-color: transparent #000 transparent transparent;
+  }
+  .next-month {
+    right: 15px;
+    border-width: 38.5px 0 38.5px 34px;
+    border-color: transparent transparent transparent #000;
+  }
+}
+
+.cal-disabled {
+  background-color: #eee !important;
+  pointer-events: none !important;
+}
+
+.cal-disabled .cal-day-number {
+  opacity: 0.1 !important;
+}
+
+.cal-event-container {
+  width: 100% !important;
+  padding-right: 70px;
+}
+
+.cal-hour-rows {
+  overflow-x: hidden !important;
+}
+
+.cal-days {
+  margin-bottom: 20px;
+}
+
+.cal-day-view {
+  overflow-y: auto;
+  margin-bottom: 20px;
+  
+  @media screen and ( max-height: 1200px) {
+    height: 721px;
+  }
+
+  @media screen and ( max-height: 1000px) {
+    height: 400px;
+  }
+}
+
+.cal-event-title {
+  font-size: 16px;
+  color: $tjs-dark;
+}
+
+.cal-event-action {
+  font-size: 20px;
+  color: red;
+  float: right;
+}
+
+.background-white {
+  background-color: white;
+}
+
+.booked-time {
+  background: repeating-linear-gradient( 45deg, #fff, #fff 10px, $tjs-dark 10px, $tjs-dark 20px); // background-color: #9B9B9B !important;
+  color: #9B9B9B !important;
+  pointer-events: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  &>* {
+    display: none;
+  }
+}

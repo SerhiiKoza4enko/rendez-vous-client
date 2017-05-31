@@ -1,0 +1,120 @@
+section.booking-modal(tjsMaterialize)
+  form(
+    '(ngSubmit)'='addBooking()'
+    '#bookingForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Забронировать комнату
+    .modal-body
+      .row
+        .form-group.col-xs-12
+          | Убедительно просим Вас в случае отмены брони сообщать об этом (можно по телефону). В противном случае Вы окажитесь в "черном списке" с последующим отказом в бронировании.  
+          | Спасибо за понимание. 
+      .row
+        .form-group.col-xs-6
+          label.control-label(for='title') Начало занятия
+          ngb-timepicker#start(
+            name='start'
+            '[(ngModel)]'='timeRange.start'
+            '[meridian]'=false
+            '[formControl]'='startTimeControl'
+          )
+          small.text-danger('*ngIf'='!startTimeControl.valid')
+            span('*ngIf'='startTimeControl.errors && startTimeControl.errors["minBusy"]') Эта комната занята до {{ timeSpnaToString(minTime) }}.
+        .form-group.col-xs-6
+          label.control-label(for='end') Конец занятия
+          ngb-timepicker#end(
+            name='end'
+            '[(ngModel)]'='timeRange.end'
+            '[meridian]'=false
+            '[formControl]'='endTimeControl'
+          )
+          small.text-danger('*ngIf'='!endTimeControl.valid')
+            span('*ngIf'='endTimeControl.errors && endTimeControl.errors["maxBusy"]') Эта комната занята после {{ timeSpnaToString(maxTime) }}.
+      .form-group.label-floating
+        .togglebutton
+          label(for='isPeriodic')
+            input#isPeriodic(
+              name='isPeriodic'
+              type='checkbox'
+              '[(ngModel)]'='booking.periodic'
+              '#isPeriodic'='ngModel'
+            )
+            | Периодическое занятие?
+      .form-group.label-floating.row.days-div('[hidden]'='!booking.periodic')
+        label.control-label Дни
+        .form-group.day-picker(*ngFor='let day of daysOfWeek')
+          .checkbox
+            label
+              input(
+                type='checkbox'
+                value='{{ day.id }}'
+                '[checked]'='booking.days_of_week.indexOf(day.id) > -1'
+                '(click)'="toggleDaySelection(day)"
+              )
+              | {{ day.name }}
+      .row
+        .col-xs-6('*ngIf'='booking.periodic')
+          .form-group
+            label.control-label(for='period_start_div') Начальная дата
+            #period_start_div.input-group(name='period_start_div')
+              input#period_start.form-control(
+                'ngbDatepicker'
+                'name'='period_start'
+                '[(ngModel)]'='dateRange.start'
+                '#period_start'='ngbDatepicker'
+              )
+              .input-group-addon(
+                '(click)'='period_start.toggle()'
+              )
+                i.fa.fa-calendar
+        .col-xs-6('*ngIf'='booking.periodic')
+          .form-group
+            label.control-label(for='period_end_div') Конечная дата
+            #period_end_div.input-group(name='period_end_div')
+              input#period_end.form-control(
+                'ngbDatepicker'
+                'name'='period_end'
+                '[(ngModel)]'='dateRange.end'
+                '#period_end'='ngbDatepicker'
+              )
+              .input-group-addon(
+                '(click)'='period_end.toggle()'
+              )
+                i.fa.fa-calendar
+      .form-group.label-floating
+        label.control-label(for='title') Комментарий
+        textarea#title.form-control(
+          tjsAutosize
+          name='title'
+          type='text'
+          '[(ngModel)]'='booking.title'
+          '#title'='ngModel'
+        )
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='addBooking()'
+        '[disabled]'='!bookingForm.form.valid || !startTimeControl.valid || !endTimeControl.valid'
+      )
+        i.fa.fa-fw.fa-floppy-o
+        | &nbsp;
+        | Сохранить

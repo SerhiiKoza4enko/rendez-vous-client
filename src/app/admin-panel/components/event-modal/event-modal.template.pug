@@ -1,0 +1,54 @@
+section.admin-event-modal(tjsMaterialize)
+  form(
+    '(ngSubmit)'='addEvent()'
+    '#eventForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Мероприятие
+    .modal-body
+      .form-group.label-floating
+        label.control-label(for='subject') Заголовок
+        input#subject.form-control(
+          name='subject'
+          '[(ngModel)]'='event.subject'
+          '#subject'='ngModel'
+        )
+      .form-group.label-floating
+        app-tinymce#description(
+          name='description'
+          '[formControl]'='content'
+        )
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-info(
+        type='button'
+        role='button'
+        '(click)'='share()'
+      )
+        i.fa.fa-fw.fa-facebook
+        | &nbsp;
+        | Фейсбук
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='addEvent()'
+      )
+        i.fa.fa-fw.fa-floppy-o
+        | &nbsp;
+        | Сохранить

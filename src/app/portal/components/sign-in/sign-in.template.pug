@@ -1,0 +1,69 @@
+section.sign-in(tjsMaterialize)
+  form(
+    '(ngSubmit)'='signIn()'
+    '#signInForm'='ngForm'
+  )
+    .modal-body
+      .col-xs-12.text-xs-center
+        button.close(
+          type='button'
+          role='button'
+          aria-label='Close'
+          '(click)'='modalInstance.dismiss()'
+        )
+          span(aria-hidden='true') ×
+        img.img-responsive(
+          [src]='"../../assets/images/logo.png"'
+          alt='Rendez Vous'
+        )
+      .container-fluid.text-xs-left
+        .row
+          .col-xs-12
+            .card-block.text-xs-center.pa-0
+              h4.card-title Вход
+            .form-group.label-floating
+              label.control-label(for='email') Email
+              input#email.form-control(
+                name='email'
+                type='email'
+                '[(ngModel)]'='signInModel.email'
+                '#email'='ngModel'
+                required
+                email
+              )
+              small.text-danger('*ngIf'='!email.valid && !email.pristine')
+                span('*ngIf'='email.errors?.required') Введите email.
+                span('*ngIf'='email.errors?.email') Некорректный email.
+            .form-group.label-floating
+              label.control-label(for='password') Пароль
+              input#password.form-control(
+                name='password'
+                type='password'
+                '[(ngModel)]'='signInModel.password'
+                '#password'='ngModel'
+                required
+                minlength='6'
+              )
+              //- button.btn.btn-link.btn-xs.text-primary.float-xs-right.pt-0(
+              //-   routerLink='/password-reset'
+              //-   type='button'
+              //-   role='button'
+              //- ) Забыли пароль?
+              small.text-danger('*ngIf'='!password.valid && !password.pristine')
+                span('*ngIf'='password.errors?.required') Введите пароль.
+                span('*ngIf'='password.errors?.minlength') Пароль должен состоять из 6 или более символов.
+    .modal-footer
+      .card-block.pt-0.pl-1.pr-1.text-xs-left
+        button.btn.btn-success.float-xs-right(
+          type='submit'
+          role='button'
+          '[disabled]'='!signInForm.form.valid'
+        )
+          i.fa.fa-check
+          | &nbsp;
+          | Вход
+        button.btn.btn-link.btn-xs.text-primary.pt-1(
+          type='button'
+          role='button'
+          '(click)'='signUp()'
+        ) Создать новый аккаунт?

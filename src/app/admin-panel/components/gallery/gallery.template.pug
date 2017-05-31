@@ -1,0 +1,23 @@
+section.admin-gallery(tjsMaterialize)
+  ag-grid-angular.ag-material.data-grid(
+    '[rowData]'='photos'
+    '[gridOptions]'='gridOptions'
+    '(gridReady)'='onGridReady($event)'
+    '(rowClicked)'='onRowClicked($event)'
+  )
+  .row.center
+    .col-xs.center
+      ngb-pagination.center(
+        '[collectionSize]'='photos?.length'
+        '[pageSize]'='4'
+        '[(page)]'="page"
+        '(pageChange)'='pageChanged(page)'
+      )
+  .add-button
+    button.btn.btn-success.btn-raised(
+      role='button'
+      '(click)'='addPhoto()'
+    )
+      i.fa.fa-plus
+      | &nbsp;
+      | Добавить

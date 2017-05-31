@@ -1,0 +1,33 @@
+.admin-foreigns {
+  .data-grid {
+    width: 100%;
+    height: 430px;
+  }
+  .ag-material .ag-cell-not-inline-editing {
+    padding-top: 0;
+  }
+  .ag-header-row {
+    background-color: #fff;
+  }
+  .ag-filter-select {
+    display: none;
+  }
+  .ag-header-cell-text {
+    color: #337ab7;
+  }
+  .ag-row-even {
+    background-color: #f9f9f9;
+    &>.not-checked {
+      background-color: rgba(0, 255, 0, 0.4);
+    }
+  }
+  .viewCol {
+    padding: 0;
+    &>button {
+      height: 100%;
+    }
+  }
+  .not-checked {
+    background-color: rgba(0, 255, 0, 0.2);
+  }
+}

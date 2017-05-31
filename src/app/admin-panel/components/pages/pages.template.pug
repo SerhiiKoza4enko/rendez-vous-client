@@ -1,0 +1,13 @@
+section.admin-pages(tjsMaterialize)
+  app-tinymce(
+    '*ngIf'='page && page.about'
+    '[(ngModel)]'='page.about'
+  )
+  a.btn.btn-raised.btn-warning.float-xs-right(
+    type='button'
+    role='button'
+    '(click)'='saveChanges()'
+  )
+    i.fa.fa-fw.fa-floppy-o
+    | &nbsp;
+    | Сохранить

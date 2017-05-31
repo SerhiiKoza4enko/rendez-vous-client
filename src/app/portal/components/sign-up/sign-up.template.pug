@@ -1,0 +1,116 @@
+section.sign-up(tjsMaterialize)
+  form(
+    '(ngSubmit)'='signUp()'
+    '#signUpForm'='ngForm'
+  )
+    .modal-body
+      .col-xs-12.text-xs-center
+        button.close(
+          type='button'
+          role='button'
+          aria-label='Close'
+          '(click)'='modalInstance.dismiss()'
+        )
+          span(aria-hidden='true') ×
+        img.img-responsive(
+          [src]='"../../assets/images/logo.png"'
+          alt='Rendez Vous'
+        )
+      .container-fluid.text-xs-left
+        .row
+          .col-xs-12
+            .card-block.text-xs-center.pa-0
+              h4.card-title Регистрация
+            .row
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='role') Имя
+                  input#firstname.form-control(
+                    name='firstname'
+                    type='text'
+                    '[(ngModel)]'='signUpModel.firstname'
+                    '#firstname'='ngModel'
+                    required
+                  )
+                  small.text-danger('*ngIf'='!firstname.valid && !firstname.pristine')
+                    span('*ngIf'='firstname.errors?.required') Введите имя.
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='lastname') Фамилия
+                  input#lastname.form-control(
+                    name='lastname'
+                    type='text'
+                    '[(ngModel)]'='signUpModel.lastname'
+                    '#lastname'='ngModel'
+                  )
+            .row
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='email') Email
+                  input#email.form-control(
+                    name='email'
+                    type='email'
+                    '[(ngModel)]'='signUpModel.email'
+                    '#email'='ngModel'
+                    required
+                    email
+                  )
+                  small.text-danger('*ngIf'='!email.valid && !email.pristine')
+                    span('*ngIf'='email.errors?.required') Введите email.
+                    span('*ngIf'='email.errors?.email') Некорректный email.
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='phone') Телефон
+                  input#phone.form-control(
+                    name='phone'
+                    type='text'
+                    '[(ngModel)]'='signUpModel.phone'
+                    '[textMask]'='{mask: phoneMask, guide: true}'
+                    '#phone'='ngModel'
+                  )
+                  small.text-danger('*ngIf'='!phone.valid')
+                    span Некорректный телефон.
+            .row
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='password') Пароль
+                  input#password.form-control(
+                    name='password'
+                    type='password'
+                    '[(ngModel)]'='signUpModel.password'
+                    '#password'='ngModel'
+                    required
+                    minlength='6'
+                  )
+                  small.text-danger('*ngIf'='!password.valid && !password.pristine')
+                    span('*ngIf'='password.errors?.required') Введите пароль.
+                    span('*ngIf'='password.errors?.minlength') Пароль должен состоять из 6 или более символов.
+              .col-md-6
+                .form-group.label-floating
+                  label.control-label(for='confirmPassword') Подтверждение пароля
+                  input#confirmPassword.form-control(
+                    name='confirmPassword'
+                    type='password'
+                    '[(ngModel)]'='signUpModel.confirmPassword'
+                    '#confirmPassword'='ngModel'
+                    required
+                    '[equalTo]'='password'
+                  )
+                  small.text-danger('*ngIf'='!confirmPassword.valid && !confirmPassword.pristine')
+                    span('*ngIf'='confirmPassword.errors?.required') Пожалуйста, подствердите свой пароль. Введите его снова.
+                    span('*ngIf'='confirmPassword.errors?.equalTo') Пароли не совпадают.
+    .modal-footer
+      .card-block.pt-0.pl-1.pr-1.text-xs-left
+        button.btn.btn-success.float-xs-right(
+          type='submit'
+          role='button'
+          '[disabled]'='!signUpForm.form.valid'
+        )
+          i.fa.fa-check
+          | &nbsp;
+          | Регистрация
+        button.btn.btn-link.btn-xs.text-primary.pt-1(
+          type='button'
+          role='button'
+          '(click)'='signIn()'
+        ) Уже зарегистрированы?
