@@ -55,7 +55,7 @@ export class AdminBookingComponent implements OnInit {
   public bookings: IBooking[];
   public weekStartsOn: number = 1;
   public view: string = 'month';
-  public startHours: number = 9;
+  public startHours: number = 8;
   public endHours: number = 20;
   public dayModifier: Function;
   public color: any = { primary: 'blue', secondary: '' };
