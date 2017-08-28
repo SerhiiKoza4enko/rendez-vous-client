@@ -47,7 +47,7 @@ interface BookingCalendarEvent extends CalendarEvent {
 })
 
 export class AdminBookingComponent implements OnInit {
-  public selectedRoom: string;
+  public selectedRoom: IRoom;
   public rooms: IRoom[];
   public viewDate: Date = new Date();
   public events: CalendarEvent[];
@@ -63,6 +63,7 @@ export class AdminBookingComponent implements OnInit {
   public timeStruct: NgbTimeStruct;
 
   public user: IUser;
+  public roomCols: number;
 
   public actions: CalendarEventAction[] = [{
     label: `<i class="fa fa-trash"></i>`,
@@ -81,6 +82,7 @@ export class AdminBookingComponent implements OnInit {
   ) {
     console.log('hello `Booking` component');
     this.user = this.storage.retrieve('currentuser');
+    this.selectedRoom = <IRoom> { id: '' };
     this.loadRooms();
     let today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -118,7 +120,7 @@ export class AdminBookingComponent implements OnInit {
 
   public daySelect(day: Date): void {
     this.viewDate = day;
-    this.view = 'day';
+    this.view = 'room';
   }
 
   public timeSelect(event: any, booking?: IBooking): void {
@@ -132,7 +134,7 @@ export class AdminBookingComponent implements OnInit {
       if (
         (moment(b.end_time).isBefore(moment(date)) || moment(b.end_time).isSame(moment(date)))
         && moment(b.end_time).isAfter(minTime)
-        && (<IRoom> b.room).id === this.selectedRoom
+        && (<IRoom> b.room).id === this.selectedRoom.id
         && (!booking || b.id !== booking.id)
       ) {
         minTime = moment(b.end_time);
@@ -140,7 +142,7 @@ export class AdminBookingComponent implements OnInit {
       if (
         (moment(b.start_time).isAfter(moment(date)) || moment(b.start_time).isSame(moment(date)))
         && moment(b.start_time).isBefore(maxTime)
-        && (<IRoom> b.room).id === this.selectedRoom
+        && (<IRoom> b.room).id === this.selectedRoom.id
         && (!booking || b.id !== booking.id)
       ) {
         maxTime = moment(b.start_time);
@@ -152,6 +154,11 @@ export class AdminBookingComponent implements OnInit {
   public eventClicked(event: any): void {
     let booking: IBooking = event.event.booking;
     this.timeSelect({ date: booking.start_time }, booking);
+  }
+
+  public selectRoom(room: IRoom): void {
+    this.selectedRoom = room;
+    this.view = 'day';
   }
 
   public removeClick(event: any): void {
@@ -228,10 +235,16 @@ export class AdminBookingComponent implements OnInit {
     this.roomService.query()
       .$observable
       .subscribe((rooms: IRoom[]) => {
-        this.rooms = rooms;
-        if (rooms && rooms.length) {
-          this.selectedRoom = this.rooms[0].id;
-        }
+        this.rooms = rooms.filter((room: IRoom) => {
+          return room.active === true;
+        }).sort((a: IRoom, b: IRoom) => {
+          return a.order > b.order ? 1 : a.order < b.order ? -1 : 0;
+        }).map((room: IRoom) => {
+          room.description = (room.description || '').replace(/\n/g, '<br />');
+          return room;
+        });
+        this.roomCols = Math.ceil(12 / Math.ceil(this.rooms.length / 2));
+        this.roomCols = this.roomCols === 12 && this.rooms.length > 1 ? 6 : this.roomCols;
       });
   }
 
@@ -288,7 +301,7 @@ export class AdminBookingComponent implements OnInit {
   private fillDayEvents(): void {
     this.dayEvents = this.bookings
       .filter((item: IBooking) => {
-        return (<IRoom> item.room).id === this.selectedRoom;
+        return (<IRoom> item.room).id === this.selectedRoom.id;
       })
       .map((item: IBooking) => {
         let event: BookingCalendarEvent = {

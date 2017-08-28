@@ -46,7 +46,7 @@ interface BookingCalendarEvent extends CalendarEvent {
 })
 
 export class BookingComponent implements OnInit {
-  public selectedRoom: string;
+  public selectedRoom: IRoom;
   public rooms: IRoom[];
   public viewDate: Date = new Date();
   public events: CalendarEvent[];
@@ -58,6 +58,7 @@ export class BookingComponent implements OnInit {
   public endHours: number = 20;
   public dayModifier: Function;
   public color: any = { primary: 'blue', secondary: '' };
+  public roomCols: number;
 
   public timeStruct: NgbTimeStruct;
 
@@ -79,6 +80,8 @@ export class BookingComponent implements OnInit {
     private router: Router
   ) {
     console.log('hello `Booking` component');
+    this.bookings = [];
+    this.selectedRoom = <IRoom> { id: '' };
     this.user = this.storage.retrieve('currentuser');
     this.loadRooms();
     let today = new Date();
@@ -91,12 +94,12 @@ export class BookingComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadBookings();
     this.storage.observe('currentuser').subscribe((user: any) => {
       if (user) {
         this.user = user;
+        this.loadBookings();
       } else {
-        this.user = <IUser> { id: '' };
+        this.user = <IUser>{ id: '' };
       }
     });
   }
@@ -113,19 +116,18 @@ export class BookingComponent implements OnInit {
           item.end_time = moment(item.end_time).toDate();
           item.days_of_week =
             item.days_of_week && item.days_of_week.length
-              ? (<string> item.days_of_week).split(',')
+              ? (<string>item.days_of_week).split(',')
                 .map((day: string) => { return parseInt(day, 0); })
               : [];
           return item;
-        });
+        }) || [];
         this.fillEvents();
       });
   }
 
   public daySelect(day: Date): void {
-    if (!this.user.phone) { return; }
     this.viewDate = day;
-    this.view = 'day';
+    this.view = 'room';
   }
 
   public timeSelect(event: any, booking?: IBooking): void {
@@ -139,7 +141,7 @@ export class BookingComponent implements OnInit {
       if (
         (moment(b.end_time).isBefore(moment(date)) || moment(b.end_time).isSame(moment(date)))
         && moment(b.end_time).isAfter(minTime)
-        && (<IRoom> b.room).id === this.selectedRoom
+        && (<IRoom>b.room).id === this.selectedRoom.id
         && (!booking || b.id !== booking.id)
       ) {
         minTime = moment(b.end_time);
@@ -147,7 +149,7 @@ export class BookingComponent implements OnInit {
       if (
         (moment(b.start_time).isAfter(moment(date)) || moment(b.start_time).isSame(moment(date)))
         && moment(b.start_time).isBefore(maxTime)
-        && (<IRoom> b.room).id === this.selectedRoom
+        && (<IRoom>b.room).id === this.selectedRoom.id
         && (!booking || b.id !== booking.id)
       ) {
         maxTime = moment(b.start_time);
@@ -162,7 +164,7 @@ export class BookingComponent implements OnInit {
   }
 
   public removeClick(event: any): void {
-    (<any> swal)({
+    (<any>swal)({
       title: 'Отменить?',
       // tslint:disable-next-line:max-line-length
       text: `Вы уверены, что хотите отменить это событие? Вы не сможете восстановить его после удаления!`,
@@ -179,7 +181,7 @@ export class BookingComponent implements OnInit {
     })
       .then(() => {
         if (event.booking.periodic) {
-          (<any> swal)({
+          (<any>swal)({
             title: 'Удалить?',
             // tslint:disable-next-line:max-line-length
             text: `Вы хотите отменить одно событие или за весь период?`,
@@ -199,12 +201,12 @@ export class BookingComponent implements OnInit {
             }, () => {
               this.removeBooking(event.booking, false);
             })
-            .catch((<any> swal).noop);
+            .catch((<any>swal).noop);
         } else {
           this.removeBooking(event.booking, false);
         }
       })
-      .catch((<any> swal).noop);
+      .catch((<any>swal).noop);
   }
 
   public disableScroll(): void {
@@ -213,6 +215,23 @@ export class BookingComponent implements OnInit {
 
   public enableScroll(): void {
     $.fn.fullpage.setMouseWheelScrolling(true);
+  }
+
+  public selectRoom(room: IRoom): void {
+    if (!this.user) {
+        this
+          .toastr
+          // tslint:disable-next-line:max-line-length
+          .warning(`Для бронирования комнат необходимо зарегистрироваться или войти под своей учетной записью.`);
+        return;
+      } else if (!this.user.phone) {
+        this
+          .toastr
+          .warning(`Вы не можете бронировать комнаты. Укажите свой номер телефона.`);
+        return;
+      }
+    this.selectedRoom = room;
+    this.view = 'day';
   }
 
   private removeBooking(booking: IBooking, removeAll: boolean): void {
@@ -235,10 +254,17 @@ export class BookingComponent implements OnInit {
     this.roomService.query()
       .$observable
       .subscribe((rooms: IRoom[]) => {
-        this.rooms = rooms;
-        if (rooms && rooms.length) {
-          this.selectedRoom = this.rooms[0].id;
-        }
+        this.rooms = rooms.filter((room: IRoom) => {
+          return room.active === true;
+        }).sort((a: IRoom, b: IRoom) => {
+          return a.order > b.order ? 1 : a.order < b.order ? -1 : 0;
+        }).map((room: IRoom) => {
+          room.description = (room.description || '').replace(/\n/g, '<br />');
+          return room;
+        });
+        this.roomCols = Math.ceil(12 / Math.ceil(this.rooms.length / 2));
+        this.roomCols = this.roomCols === 12 && this.rooms.length > 1 ? 6 : this.roomCols;
+        this.loadBookings();
       });
   }
 
@@ -250,7 +276,7 @@ export class BookingComponent implements OnInit {
     modalRef.componentInstance.selected = date;
     modalRef.componentInstance.minTime = min;
     modalRef.componentInstance.maxTime = max;
-    modalRef.componentInstance.room = this.selectedRoom;
+    modalRef.componentInstance.room = this.selectedRoom.id;
 
     modalRef.result.then((bookings: IBooking[]) => {
       $.fn.fullpage.setMouseWheelScrolling(true);
@@ -264,7 +290,7 @@ export class BookingComponent implements OnInit {
   }
 
   private getTimeStruct(date: moment.Moment): NgbTimeStruct {
-    return <NgbTimeStruct> {
+    return <NgbTimeStruct>{
       hour: date.hour(),
       minute: date.minute()
     };
@@ -278,15 +304,15 @@ export class BookingComponent implements OnInit {
       let event: CalendarEvent = {
         start: item.start_time,
         end: item.end_time,
-        title: (<IRoom> item.room).name
+        title: (<IRoom>item.room).name
         + ' '
         + moment(item.start_time).format('HH:mm')
         + ' - '
         + moment(item.end_time).format('HH:mm')
         + (item.title && item.title.length ? ' ' + item.title : ''),
         color: {
-          primary: this.hexToRgb((<IRoom> item.room).color, 1),
-          secondary: this.hexToRgb((<IRoom> item.room).color, 0.5)
+          primary: this.hexToRgb((<IRoom>item.room).color, 1),
+          secondary: this.hexToRgb((<IRoom>item.room).color, 0.5)
         }
       };
       return event;
@@ -297,7 +323,7 @@ export class BookingComponent implements OnInit {
   private fillDayEvents(): void {
     this.dayEvents = this.bookings
       .filter((item: IBooking) => {
-        return (<IRoom> item.room).id === this.selectedRoom;
+        return (<IRoom>item.room).id === this.selectedRoom.id;
       })
       .map((item: IBooking) => {
         let event: BookingCalendarEvent = {
@@ -306,8 +332,8 @@ export class BookingComponent implements OnInit {
           end: item.end_time,
           title: item.user.id !== this.user.id ? 'Это время уже занято' : item.title,
           color: {
-            primary: this.hexToRgb((<IRoom> item.room).color, 1),
-            secondary: this.hexToRgb((<IRoom> item.room).color, 0.5)
+            primary: this.hexToRgb((<IRoom>item.room).color, 1),
+            secondary: this.hexToRgb((<IRoom>item.room).color, 0.5)
           },
           cssClass: item.user.id !== this.user.id ? 'booked-time' : '',
           actions: this.actions

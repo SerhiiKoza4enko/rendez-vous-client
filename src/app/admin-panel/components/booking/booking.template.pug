@@ -1,5 +1,6 @@
 section.booking(tjsMaterialize)
-  h3.center {{ viewDate | calendarDate:(view + 'ViewTitle'):'ru' }}      
+  h3.center('*ngIf'='view !== "room"') {{ viewDate | calendarDate:(view + 'ViewTitle'):'ru' }}
+  h4.center('*ngIf'='view === "day"') {{ selectedRoom.name }} ({{ selectedRoom.square }} кв.м., {{ selectedRoom.capacity }} чел.)
   .row
     .col-xs-1
       .nav-button.prev-month(
@@ -11,22 +12,13 @@ section.booking(tjsMaterialize)
       )
       .nav-button.prev-month(
         '(click)'='view="month"'
+        '*ngIf'='view === "room"'
+      )
+      .nav-button.prev-month(
+        '(click)'='view="room"'
         '*ngIf'='view === "day"'
       )
     .col-xs-10.background-white
-      .form-group.label-floating('*ngIf'='view === "day"')
-        label.control-label(for='room') Комната
-        select#room.form-control(
-          name='room'
-          '[(ngModel)]'='selectedRoom'
-          '#room'='ngModel'
-          required
-          '(change)'='fillDayEvents()'
-        )
-          option(
-            '*ngFor'='let room of rooms'
-            '[ngValue]'='room.id'
-          ) {{ room.name }}
       div('[ngSwitch]'='view')
         mwl-calendar-month-view(
           *ngSwitchCase="'month'"
@@ -37,6 +29,24 @@ section.booking(tjsMaterialize)
           '[dayModifier]'='dayModifier'
           '(dayClicked)'='daySelect($event.day.date)'
         )
+        .row.rv-bg-fist-important(*ngSwitchCase='"room"')
+          div(
+            '*ngFor'='let room of rooms'
+            class='col-xs-{{roomCols}} pointer room'
+            '(click)'='selectRoom(room)'
+          )
+            img(
+              '[src]'='room.image'
+            )
+            span.title-wrp
+              span.title {{ room.name }}
+              span.description
+                | Площадь: {{ room.square }} кв.м.
+              span.description
+                | Количество человек: {{ room.capacity }}
+              span.description(
+                '[innerHTML]'='room.description'
+              )
         mwl-calendar-day-view(
           *ngSwitchCase='"day"'
           '[viewDate]'='viewDate'

@@ -1,0 +1,91 @@
+section.admin-room-modal(tjsMaterialize)
+  form(
+    '(ngSubmit)'='addRoom()'
+    '#roomForm'='ngForm'
+  )
+    .modal-header
+      button.close(
+        type='button'
+        role='button'
+        aria-label='Close'
+        '(click)'='modalInstance.dismiss()'
+      )
+        span(aria-hidden='true') ×
+      h4.modal-title
+        span
+          | Комната
+    .modal-body
+      .form-group.label-floating
+        label.control-label(for='description') Название
+        input#name.form-control(
+          name='name'
+          '[(ngModel)]'='room.name'
+          '#name'='ngModel'
+        )
+      .form-group.label-floating
+        label.control-label(for='square') Площадь
+        input#square.form-control(
+          name='square'
+          type='number'
+          '[(ngModel)]'='room.square'
+          '#square'='ngModel'
+        )
+      .form-group.label-floating
+        label.control-label(for='capacity') Количество человек
+        input#capacity.form-control(
+          name='capacity'
+          '[(ngModel)]'='room.capacity'
+          '#capacity'='ngModel'
+        )
+      .form-group.label-floating
+        label.control-label(for='description') Описание
+        textarea#description.form-control(
+          autosize
+          name='description'
+          '[(ngModel)]'='room.description'
+          '#description'='ngModel'
+        )
+      .form-group.label-floating
+        .togglebutton
+          label(for='isActive')
+            input#isActive(
+              name='isActive'
+              type='checkbox'
+              '[(ngModel)]'='room.active'
+              '#isActive'='ngModel'
+            )
+            | Активна?
+      .form-group.label-floating
+        label.control-label(for='order') Номер по порядку
+        input#order.form-control(
+          name='order'
+          type='number'
+          '[(ngModel)]'='room.order'
+          '#order'='ngModel'
+        )
+      input#image(
+        'type'='file'
+        name='image'
+        '(change)'='readUrl($event)'
+      )
+      img(
+        '[src]'='url'
+        '*ngIf'='url'
+      )
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть
+      button.btn.btn-success(
+        type='button'
+        role='button'
+        '(click)'='addRoom()'
+      )
+        i.fa.fa-fw.fa-floppy-o
+        | &nbsp;
+        | Сохранить

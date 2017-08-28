@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { CalendarModule } from 'angular-calendar';
+import { Autosize } from 'angular2-autosize';
 
 import { ROUTES } from './admin-panel.routes';
 import { CoreModule } from '../core';
@@ -18,6 +19,8 @@ import { AdminBookingComponent } from './components/booking';
 import { BookingModalComponent } from '../portal/components/booking-modal';
 import { AdminGalleryComponent } from './components/gallery';
 import { AdminPhotoModalComponent } from './components/photo-modal';
+import { AdminRoomsComponent } from './components/rooms';
+import { AdminRoomModalComponent } from './components/room-modal';
 
 @NgModule({
   imports: [
@@ -37,7 +40,9 @@ import { AdminPhotoModalComponent } from './components/photo-modal';
     AdminEventModalComponent,
     AdminBookingComponent,
     AdminGalleryComponent,
-    AdminPhotoModalComponent
+    AdminPhotoModalComponent,
+    AdminRoomsComponent,
+    AdminRoomModalComponent
   ],
   declarations: [
     AdminLayoutComponent,
@@ -51,14 +56,18 @@ import { AdminPhotoModalComponent } from './components/photo-modal';
     AdminEventModalComponent,
     AdminBookingComponent,
     AdminGalleryComponent,
-    AdminPhotoModalComponent
+    AdminPhotoModalComponent,
+    AdminRoomsComponent,
+    AdminRoomModalComponent,
+    Autosize
   ],
   providers: [],
   entryComponents: [
     AdminFeedbackModalComponent,
     AdminForeignModalComponent,
     AdminEventModalComponent,
-    AdminPhotoModalComponent
+    AdminPhotoModalComponent,
+    AdminRoomModalComponent
   ],
   schemas: []
 })

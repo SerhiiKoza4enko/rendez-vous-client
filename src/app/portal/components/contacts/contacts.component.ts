@@ -20,8 +20,8 @@ import { ContactService } from '../../services/contact';
 
 export class ContactsComponent {
   public contacts: IContact[];
-  public lat: number = 47.861519;
-  public lng: number = 35.097058;
+  public lat: number = 47.848571;
+  public lng: number = 35.104203;
 
   constructor(
     private contactService: ContactService,

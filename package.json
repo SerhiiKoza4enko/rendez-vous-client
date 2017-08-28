@@ -88,6 +88,7 @@
     "ag-grid": "^9.1.0",
     "ag-grid-angular": "^9.1.0",
     "angular-calendar": "^0.14.0",
+    "angular2-autosize": "^1.0.1",
     "angular2-google-maps": "^0.17.0",
     "angular2-image-upload": "^0.6.1",
     "angular2-text-mask": "^8.0.1",

@@ -13,6 +13,23 @@ export class RoomService extends APIResourceService {
   })
   public query: ResourceMethod<any, IRoom[]>;
 
+  @ResourceAction({
+    method: RequestMethod.Post
+  })
+  public save: ResourceMethod<IRoom, IRoom>;
+
+  @ResourceAction({
+    method: RequestMethod.Put,
+    path: 'rooms/{!id}'
+  })
+  public update: ResourceMethod<IRoom, IRoom>;
+
+  @ResourceAction({
+    method: RequestMethod.Delete,
+    path: 'rooms/{!id}'
+  })
+  public remove: ResourceMethod<{ id: any }, any>;
+
   constructor(
     http: Http,
     injector: Injector,

@@ -30,12 +30,12 @@ import { BookingComponent } from '../booking';
 
 export class LayoutComponent implements OnInit {
   private static bgColorsMap: any = {
-    1: 'rv-bg-blue-green-important',
-    2: 'rv-bg-green-important',
-    3: 'rv-bg-yellow-green-important',
-    4: 'rv-bg-yellow-important',
-    5: 'rv-bg-yellow-orange-important',
-    6: 'rv-bg-orange-important'
+    1: 'rv-bg-fist-important',
+    2: 'rv-bg-malahit-important',
+    3: 'rv-bg-fist-important',
+    4: 'rv-bg-malahit-important',
+    5: 'rv-bg-fist-important',
+    6: 'rv-bg-malahit-important'
   };
   private static scope: any;
   public user: IUser;
@@ -160,23 +160,9 @@ export class LayoutComponent implements OnInit {
   public onPageChanged(index: number, nextIndex: number, direction: string) {
     let bg = jQuery('.layout');
     bg.removeClass([
-      'rv-bg-blue-green-important',
-      'rv-bg-green-important',
-      'rv-bg-yellow-green-important',
-      'rv-bg-yellow-important',
-      'rv-bg-yellow-orange-important',
-      'rv-bg-orange-important'
+      'rv-bg-fist-important',
+      'rv-bg-malahit-important'
     ].join(' '));
     bg.addClass(LayoutComponent.bgColorsMap[nextIndex]);
-    if (
-      nextIndex === 7
-      && !LayoutComponent.scope.user.phone
-      && LayoutComponent.scope.user.role !== 'admin'
-    ) {
-      LayoutComponent
-        .scope
-        .toastr
-        .warning(`Вы не можете бронировать комнаты. Укажите свой номер телефона.`);
-    }
   }
 }

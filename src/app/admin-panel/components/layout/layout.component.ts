@@ -21,13 +21,13 @@ import { MnFullpageOptions, MnFullpageService } from 'ng2-fullpage';
 
 export class AdminLayoutComponent implements OnInit {
   private static bgColorsMap: any = {
-    1: 'rv-bg-blue-green-important',
-    2: 'rv-bg-green-important',
-    3: 'rv-bg-yellow-green-important',
-    4: 'rv-bg-yellow-important',
-    5: 'rv-bg-yellow-orange-important',
-    6: 'rv-bg-orange-important',
-    7: 'rv-bg-red-orange-important',
+    1: 'rv-bg-fist-important',
+    2: 'rv-bg-malahit-important',
+    3: 'rv-bg-fist-important',
+    4: 'rv-bg-malahit-important',
+    5: 'rv-bg-fist-important',
+    6: 'rv-bg-malahit-important',
+    7: 'rv-bg-fist-important'
   };
   public user: IUser;
   public pages: IPage;
@@ -85,13 +85,8 @@ export class AdminLayoutComponent implements OnInit {
   public onPageChanged(index: number, nextIndex: number, direction: string) {
     let bg = jQuery('.layout');
     bg.removeClass([
-      'rv-bg-blue-green-important',
-      'rv-bg-green-important',
-      'rv-bg-yellow-green-important',
-      'rv-bg-yellow-important',
-      'rv-bg-yellow-orange-important',
-      'rv-bg-orange-important',
-      'rv-bg-red-orange-important'
+      'rv-bg-fist-important',
+      'rv-bg-malahit-important'
     ].join(' '));
     bg.addClass(AdminLayoutComponent.bgColorsMap[nextIndex]);
   }

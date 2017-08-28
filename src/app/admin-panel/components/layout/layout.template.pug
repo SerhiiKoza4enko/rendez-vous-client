@@ -1,4 +1,4 @@
-section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
+section.bg-animated.admin-layout.rv-bg-fist-important(tjsMaterialize)
   header
     nav.navbar.navbar-full.navbar-fixed-top.navbar-animated.navbar-header-menu.navbar-top
       .clearfix
@@ -15,10 +15,10 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
                 a.nav-link.line-height-1.pointer(href='admin#pages')
                   | Творческое
                   | пространство
-              li.nav-item.menu-item(data-menuanchor='foreigns')
-                a.nav-link.line-height-1.pointer(href='admin#foreigns')
-                  | Иноязычное
-                  | пространство
+              //- li.nav-item.menu-item(data-menuanchor='foreigns')
+              //-   a.nav-link.line-height-1.pointer(href='admin#foreigns')
+              //-     | Иноязычное
+              //-     | пространство
               li.nav-item.menu-item(data-menuanchor='events')
                 a.nav-link.pointer(href='admin#events')
                   | Мероприятия
@@ -34,6 +34,9 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
               li.nav-item.menu-item(data-menuanchor='gallery')
                 a.nav-link.pointer(href='admin#gallery')
                   | Галерея
+              li.nav-item.menu-item(data-menuanchor='rooms')
+                a.nav-link.pointer(href='admin#rooms')
+                  | Комнаты
               li.nav-item(
                 routerLinkActive='active'
                 '*ngIf'="user"
@@ -66,25 +69,25 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
       .section.fp-section.fp-table(
         'data-tooltip'='Творческое пространство'
         'data-anchor'='pages'
-      )  
+      )
         .fp-tableCell
           .container.fullheight.mt-75
             .row.flex-items-xs-middle.fullheight
               .col-xs
                 pages
-      .section.fp-section.fp-table(
-        'data-tooltip'='Иноязычное пространство'
-        'data-anchor'='foreigns'
-      )  
-        .fp-tableCell
-          .container.fullheight.mt-75
-            .row.flex-items-xs-middle.fullheight
-              .col-xs
-                foreigns
+      //- .section.fp-section.fp-table(
+      //-   'data-tooltip'='Иноязычное пространство'
+      //-   'data-anchor'='foreigns'
+      //- )
+      //-   .fp-tableCell
+      //-     .container.fullheight.mt-75
+      //-       .row.flex-items-xs-middle.fullheight
+      //-         .col-xs
+      //-           foreigns
       .section.fp-section.fp-table(
         'data-tooltip'='Мероприятия'
         'data-anchor'='events'
-      )  
+      )
         .fp-tableCell
           .container.fullheight.mt-75
             .row.flex-items-xs-middle.fullheight
@@ -102,7 +105,7 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
       .section.fp-section.fp-table(
         'data-tooltip'='Отзывы'
         'data-anchor'='feedbacks'
-      )  
+      )
         .fp-tableCell
           .container.fullheight.mt-75
             .row.flex-items-xs-middle.fullheight
@@ -111,7 +114,7 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
       .section.fp-section.fp-table(
         'data-tooltip'='Бронирование'
         'data-anchor'='booking'
-      )  
+      )
         .fp-tableCell
           .container.fullheight.mt-75
             .row.flex-items-xs-middle.fullheight
@@ -120,9 +123,18 @@ section.bg-animated.layout.rv-bg-blue-green-important(tjsMaterialize)
       .section.fp-section.fp-table(
         'data-tooltip'='Галерея'
         'data-anchor'='gallery'
-      )  
+      )
         .fp-tableCell
           .container.fullheight.mt-75
             .row.flex-items-xs-middle.fullheight
               .col-xs
                 gallery
+      .section.fp-section.fp-table(
+        'data-tooltip'='Комнаты'
+        'data-anchor'='rooms'
+      )
+        .fp-tableCell
+          .container.fullheight.mt-75
+            .row.flex-items-xs-middle.fullheight
+              .col-xs
+                rooms

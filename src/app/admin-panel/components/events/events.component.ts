@@ -212,14 +212,14 @@ export class AdminEventsComponent implements OnInit {
         suppressSorting: true,
         width: 35,
         cellRenderer: (params: any) => {
-          return `<button 
+          return `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Изменить'
                     container="body"
                     placement="top"
                     action="edit">
                     <i class="fa fa-pencil"></i>
-                  </button><button 
+                  </button><button
                     class="btn btn-danger btn-fab-mini"
                     ngbTooltip='Удалить'
                     container="body"

@@ -26,7 +26,6 @@ import { TextMaskModule, MaskedInputDirective } from 'angular2-text-mask';
 import { FacebookModule } from 'ng2-facebook-sdk';
 import { ImageUploadModule } from 'angular2-image-upload';
 
-
 import { TjsAutosizeDirective } from './directives/tjs-autosize';
 import { TjsMaterializeDirective } from './directives/tjs-materialize';
 
@@ -73,16 +72,16 @@ let options: ToastOptions = new ToastOptions({
       ],
       language: 'ru',
       automatic_uploads: true,
-      toolbar: `undo redo | 
-                styleselect | 
+      toolbar: `undo redo |
+                styleselect |
                 sizeselect |
                 fontselect |
                 fontsizeselect |
-                bold italic | 
-                alignleft aligncenter alignright alignjustify | 
-                bullist numlist outdent indent | 
-                link image | 
-                preview | 
+                bold italic |
+                alignleft aligncenter alignright alignjustify |
+                bullist numlist outdent indent |
+                link image |
+                preview |
                 forecolor backcolor emoticons`,
       fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
       file_browser_callback_types: 'file image media',
