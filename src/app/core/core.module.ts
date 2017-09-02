@@ -25,6 +25,7 @@ import { TinymceModule } from 'angular2-tinymce';
 import { TextMaskModule, MaskedInputDirective } from 'angular2-text-mask';
 import { FacebookModule } from 'ng2-facebook-sdk';
 import { ImageUploadModule } from 'angular2-image-upload';
+import { NgxPopperModule } from 'ngx-popper';
 
 import { TjsAutosizeDirective } from './directives/tjs-autosize';
 import { TjsMaterializeDirective } from './directives/tjs-materialize';
@@ -105,7 +106,8 @@ let options: ToastOptions = new ToastOptions({
       }
     }),
     FacebookModule.forRoot(),
-    ImageUploadModule.forRoot()
+    ImageUploadModule.forRoot(),
+    NgxPopperModule
   ],
   exports: [
     CommonModule,
@@ -126,6 +128,7 @@ let options: ToastOptions = new ToastOptions({
     AgGridNg2,
     TinymceModule,
     ImageUploadModule,
+    NgxPopperModule,
 
     MnFullpageDirective,
     TjsAutosizeDirective,

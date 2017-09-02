@@ -6,6 +6,7 @@ import { CoreModule } from '../core';
 
 import { ROUTES } from './portal.routes';
 import { LayoutComponent } from './components/layout';
+import { LayoutResponsiveComponent } from './components/layout-responsive';
 import { SignInComponent } from './components/sign-in';
 import { SignUpComponent } from './components/sign-up';
 import { ProfileComponent } from './components/profile';
@@ -38,6 +39,7 @@ import { PhotoService } from './services/photo';
   ],
   exports: [
     LayoutComponent,
+    LayoutResponsiveComponent,
     SignInComponent,
     SignUpComponent,
     ProfileComponent,
@@ -55,6 +57,7 @@ import { PhotoService } from './services/photo';
   ],
   declarations: [
     LayoutComponent,
+    LayoutResponsiveComponent,
     SignInComponent,
     SignUpComponent,
     ProfileComponent,

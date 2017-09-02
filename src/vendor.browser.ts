@@ -28,6 +28,7 @@ import 'ag-grid-angular/main';
 import 'angular2-tinymce';
 import 'ng2-facebook-sdk';
 import 'angular2-image-upload';
+import 'ngx-popper';
 // import 'ng2-froala-editor/ng2-froala-editor';
 // import 'angular2-color-picker';
 // import 'ng2-highcharts';
