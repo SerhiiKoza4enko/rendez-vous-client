@@ -21,8 +21,16 @@
      width: 100%;
    }
    ngb-datepicker-navigation {
-     & > button,ngb-datepicker-navigation-select {
+     &>button,
+     ngb-datepicker-navigation-select {
        display: inline-block !important;
      }
+   }
+   .red {
+     color: red;
+   }
+   .no-margin {
+     margin-bottom: 0;
+     margin-top: 0;
    }
  }

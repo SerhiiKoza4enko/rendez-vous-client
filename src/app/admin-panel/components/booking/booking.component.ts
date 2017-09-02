@@ -158,6 +158,7 @@ export class AdminBookingComponent implements OnInit {
 
   public selectRoom(room: IRoom): void {
     this.selectedRoom = room;
+    this.fillDayEvents();
     this.view = 'day';
   }
 

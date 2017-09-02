@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { CalendarModule } from 'angular-calendar';
 import { Autosize } from 'angular2-autosize';
+import { ColorPickerModule } from 'angular2-color-picker';
 
 import { ROUTES } from './admin-panel.routes';
 import { CoreModule } from '../core';
@@ -26,7 +27,8 @@ import { AdminRoomModalComponent } from './components/room-modal';
   imports: [
     RouterModule.forChild(ROUTES),
     CoreModule,
-    CalendarModule.forRoot()
+    CalendarModule.forRoot(),
+    ColorPickerModule
   ],
   exports: [
     AdminLayoutComponent,

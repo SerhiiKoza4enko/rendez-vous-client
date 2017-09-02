@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ColorPickerService } from 'angular2-color-picker';
 import { RoomService } from '../../../portal/services/room';
 
 @Component({
@@ -28,7 +29,8 @@ export class AdminRoomModalComponent implements OnInit {
     public modalInstance: NgbActiveModal,
     private roomService: RoomService,
     private toastr: ToastsManager,
-    private router: Router
+    private router: Router,
+    private cpService: ColorPickerService
   ) {
     console.log('hello `room-modal` component');
   }

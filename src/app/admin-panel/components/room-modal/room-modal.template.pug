@@ -46,6 +46,19 @@ section.admin-room-modal(tjsMaterialize)
           '#description'='ngModel'
         )
       .form-group.label-floating
+        label.control-label(for='color') Цвет
+        input#color.form-control(
+          name='color'
+          '[(colorPicker)]'='color'
+          '[style.background]'='room.color'
+          '[value]'='room.color'
+          '[cpOKButton]'='true'
+          '[cpOKButtonClass]'='"btn btn-primary btn-xs"'
+          '[cpCancelButton]'='true'
+          '[cpCancelButtonClass]'='"btn btn-secondary btn-xs"'
+          '[cpAlphaChannel]'='"disabled"'
+        )
+      .form-group.label-floating
         .togglebutton
           label(for='isActive')
             input#isActive(
