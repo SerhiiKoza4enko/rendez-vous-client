@@ -1,5 +1,46 @@
-.img.img-glow {
-  height: 64px;
-  vertical-align: baseline;
-  margin-right: 20px;
+@import '../../../../assets/scss/_variables';
+.portal {
+  .contacts {
+    height: 500px;
+    padding: 0;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .login-buttons {
+    display: inline-flex;
+    &>.btn {
+      background-color: $theme-light;
+      color: $theme-primary !important;
+      vertical-align: middle;
+    }
+    &>.btn:hover {
+      color: $theme-light !important;
+    }
+  }
+
+  .img.img-avatar {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: #dadada;
+    display: inline-block;
+  }
+
+  .user-profile-link {
+    display: inline-flex !important;
+  }
+
+  .user-info {
+    position: relative;
+    top: 15px;
+    margin: 0;
+    padding: 0 .5em;
+    color: $theme-light !important;
+  }
 }

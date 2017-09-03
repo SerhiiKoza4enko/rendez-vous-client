@@ -1,36 +1,45 @@
 // Styling for the navbar
 #mainNav {
-  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
+  //font-weight: 700;
   border: none;
   background: $theme-primary;
+  opacity: 0.9;
   a:focus {
     outline: none;
   }
   .navbar-brand {
     font-size: 1.1rem;
-    color: white;
+    color: $theme-light;
+    padding: 0;
+    line-height: 1em;
     &.active,
     &:active,
     &:focus,
     &:hover {
-      color: white;
+      color: $theme-light;
+    }
+    &>.img.img-glow {
+      height: 50px;
+      margin-right: 20px;
     }
   }
   .navbar-nav {
     letter-spacing: 1px;
     li.nav-item {
-      a.nav-link {
-        color: white;
-        &:hover {
-          color: $theme-success;
-          outline: none;
-        }
-        &:active,
-        &:focus {
-          color: white;
-        }
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: $theme-light;
+      max-height: 64px;
+      &>a.nav-link {
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+        color: inherit;
+        white-space: pre;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 0.9em;
       }
     }
   }
@@ -38,11 +47,11 @@
     font-size: 14px;
     padding: 11px;
     text-transform: uppercase;
-    color: white;
-    border-color: white;
+    color: $theme-light;
+    border-color: $theme-light;
     &:focus,
     &:hover {
-      color: white;
+      color: $theme-primary;
       border-color: $theme-success;
       background-color: $theme-success;
     }
@@ -50,8 +59,8 @@
 }
 @media(min-width:992px) {
   #mainNav {
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
     -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
     transition: padding-top 0.3s, padding-bottom 0.3s;
@@ -60,6 +69,56 @@
       -webkit-transition: all 0.3s;
       -moz-transition: all 0.3s;
       transition: all 0.3s;
+      padding: 0;
+      &>.img.img-glow {
+        height: 64px;
+        margin-right: 20px;
+      }
+    }
+    .navbar-nav {
+      li.nav-item > a.nav-link {
+        white-space: pre-wrap;
+        line-height: 1em;
+      }
+
+      li.nav-item::before,
+      li.nav-item::after {
+        display: inline-block;
+        opacity: 0;
+        -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+        -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+        transition: transform 0.3s, opacity 0.2s;
+      }
+
+      li.nav-item::before {
+        margin-right: 5px;
+        content: '•';
+        font-size: 2em;
+        -webkit-transform: translateX(20px);
+        -moz-transform: translateX(20px);
+        transform: translateX(20px);
+      }
+
+      li.nav-item::after {
+        margin-left: 5px;
+        content: '•';
+        font-size: 2em;
+        -webkit-transform: translateX(-20px);
+        -moz-transform: translateX(-20px);
+        transform: translateX(-20px);
+      }
+
+      li.nav-item:not(.auth-control):hover::before,
+      li.nav-item:not(.auth-control):hover::after,
+      li.nav-item:not(.auth-control):focus::before,
+      li.nav-item:not(.auth-control):focus::after,
+      li.nav-item:not(.auth-control).active::before,
+      li.nav-item:not(.auth-control).active::after {
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+        -moz-transform: translateX(0px);
+        transform: translateX(0px);
+      }
     }
     .navbar-nav > li.nav-item > a.nav-link.active {
       color: white;
@@ -74,8 +133,8 @@
     }
   }
   #mainNav.navbar-shrink {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0;
+    padding-bottom:0;
     .navbar-brand {
       font-size: 1.5em;
     }

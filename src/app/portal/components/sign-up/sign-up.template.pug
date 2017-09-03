@@ -1,26 +1,23 @@
-section.sign-up(tjsMaterialize)
+section.sign-up.portfolio-modal(tjsMaterialize)
   form(
     '(ngSubmit)'='signUp()'
     '#signUpForm'='ngForm'
   )
+    .modal-header
+      .close-modal('(click)'='modalInstance.dismiss()')
+          .lr
+            .rl
     .modal-body
-      .col-xs-12.text-xs-center
-        button.close(
-          type='button'
-          role='button'
-          aria-label='Close'
-          '(click)'='modalInstance.dismiss()'
-        )
-          span(aria-hidden='true') ×
+      .col-12.text-xs-center
         img.img-responsive(
           [src]='"../../assets/images/logo.png"'
           alt='Rendez Vous'
         )
       .container-fluid.text-xs-left
         .row
-          .col-xs-12
+          .col-12
             .card-block.text-xs-center.pa-0
-              h4.card-title Регистрация
+              h4.card-title.center Регистрация
             .row
               .col-md-6
                 .form-group.label-floating

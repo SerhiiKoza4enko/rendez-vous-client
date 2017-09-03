@@ -13,7 +13,7 @@ section.feedbacks(tjsMaterialize)
           '[src]'='feedback.user.picture'
         )
       blockquote.blockquote
-        .float-xs-right(*ngIf='feedback.user.id===user.id')
+        .float-right(*ngIf='feedback.user.id===user.id')
           button.btn.btn-danger.btn-fab(
             '(click)'='remove(feedback, $event)'
             ngbTooltip='Удалить отзыв'

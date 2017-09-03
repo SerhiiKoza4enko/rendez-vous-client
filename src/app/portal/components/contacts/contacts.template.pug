@@ -10,6 +10,7 @@ section.contacts(tjsMaterialize)
       '*ngFor'='let contact of contacts'
       '[latitude]'='contact.latitude'
       '[longitude]'='contact.longitude'
+      '[iconUrl]'='"../../assets/images/location-icon.png"'
     )
       sebm-google-map-info-window(
         '[isOpen]'='true'

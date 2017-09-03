@@ -35,6 +35,12 @@ export class ContactsComponent {
   private loadContacts() {
     this.contactService.query()
       .$observable
-      .subscribe((contacts: IContact[]) => this.contacts = contacts);
+      .subscribe((contacts: IContact[]) => {
+        this.contacts = contacts;
+        if (this.contacts.length) {
+          this.lat = contacts[0].latitude;
+          this.lng = contacts[0].longitude;
+        }
+      });
   }
 }

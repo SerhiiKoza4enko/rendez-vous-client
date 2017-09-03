@@ -180,7 +180,7 @@ module.exports = function (options) {
           exclude: [helpers.root('src/index.html')]
         },
 
-        /* 
+        /*
          * File loader for supporting images, for example, in CSS files.
          */
         {
@@ -233,10 +233,12 @@ module.exports = function (options) {
         '$': 'jquery',
         'jquery': 'jquery',
         'Tether': 'tether',
+        'Popper': 'popper.js',
         'window.jQuery': 'jquery',
         'window.$': 'jquery',
         'window.jquery': 'jquery',
-        'window.Tether': "tether"/*,
+        'window.Tether': "tether",
+        'window.Popper': 'popper.js',/*,
         Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
         Alert: "exports-loader?Alert!bootstrap/js/dist/alert",
         Button: "exports-loader?Button!bootstrap/js/dist/button",

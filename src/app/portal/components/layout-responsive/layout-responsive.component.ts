@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -30,8 +30,11 @@ import * as Popper from 'popper.js/dist/umd/popper.js';
 })
 
 export class LayoutResponsiveComponent implements OnInit {
+  // tslint:disable-next-line:member-access
+  @ViewChild('navbarToggler') navbarToggler: ElementRef;
   public user: IUser;
   public pages: IPage;
+  public active: String;
   public tooltips: string[] = [];
 
   public options: MnFullpageOptions = new MnFullpageOptions({
@@ -53,6 +56,7 @@ export class LayoutResponsiveComponent implements OnInit {
     private router: Router
   ) {
     console.log('hello `LayoutResponsive` component');
+    this.active = 'main';
     this.loadCurrentUser();
     this.loadPages();
   }
@@ -74,6 +78,10 @@ export class LayoutResponsiveComponent implements OnInit {
     }
   }
 
+  public collapseNav(): void {
+    this.navbarToggler.nativeElement.click();
+  }
+
   public loadCurrentUser(): void {
     this.userService.current()
       .$observable
@@ -84,6 +92,7 @@ export class LayoutResponsiveComponent implements OnInit {
   }
 
   public signIn(): void {
+    this.collapseNav();
     const modalRef = this.modalService.open(SignInComponent, { backdrop: 'static' });
     modalRef.result.then((result: any) => {
       if (result.needSignUp) {
@@ -93,10 +102,11 @@ export class LayoutResponsiveComponent implements OnInit {
       if (result.user) {
         this.user = result.user;
       }
-    });
+    }, () => null);
   }
 
   public signUp(): void {
+    this.collapseNav();
     const modalRef = this.modalService.open(SignUpComponent, { backdrop: 'static' });
     modalRef.result.then((result: any) => {
       if (result.needSignIn) {
@@ -106,7 +116,7 @@ export class LayoutResponsiveComponent implements OnInit {
       if (result.user) {
         this.user = result.user;
       }
-    });
+    }, () => null);
   }
 
   public profile(): void {
@@ -130,6 +140,6 @@ export class LayoutResponsiveComponent implements OnInit {
     this.pageService.query()
       .$observable
       .subscribe((pages: IPage[]) => this.pages = pages[0],
-      () => this.pages = <IPage>{});
+      () => this.pages = <IPage> {});
   }
 }

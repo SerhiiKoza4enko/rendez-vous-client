@@ -209,14 +209,6 @@ export class BookingComponent implements OnInit {
       .catch((<any> swal).noop);
   }
 
-  public disableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
-  }
-
-  public enableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(true);
-  }
-
   public selectRoom(room: IRoom): void {
     if (!this.user) {
       this
@@ -270,7 +262,6 @@ export class BookingComponent implements OnInit {
   }
 
   private open(booking?: IBooking, date?: Date, min?: NgbTimeStruct, max?: NgbTimeStruct) {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(BookingModalComponent);
     modalRef.componentInstance.booking = booking;
     modalRef.componentInstance.userId = this.user.id;
@@ -280,13 +271,10 @@ export class BookingComponent implements OnInit {
     modalRef.componentInstance.room = this.selectedRoom.id;
 
     modalRef.result.then((bookings: IBooking[]) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       if (bookings && bookings.length) {
         this.bookings = this.bookings.concat(bookings);
         this.fillEvents();
       }
-    }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
     });
   }
 

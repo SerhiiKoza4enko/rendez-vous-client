@@ -1,26 +1,23 @@
-section.sign-in(tjsMaterialize)
+section.sign-in.portfolio-modal(tjsMaterialize)
   form(
     '(ngSubmit)'='signIn()'
     '#signInForm'='ngForm'
   )
+    .modal-header
+      .close-modal('(click)'='modalInstance.dismiss()')
+          .lr
+            .rl
     .modal-body
-      .col-xs-12.text-xs-center
-        button.close(
-          type='button'
-          role='button'
-          aria-label='Close'
-          '(click)'='modalInstance.dismiss()'
-        )
-          span(aria-hidden='true') ×
+      .col-12.text-xs-center
         img.img-responsive(
           [src]='"../../assets/images/logo.png"'
           alt='Rendez Vous'
         )
       .container-fluid.text-xs-left
         .row
-          .col-xs-12
+          .col-12
             .card-block.text-xs-center.pa-0
-              h4.card-title Вход
+              h4.card-title.center Вход
             .form-group.label-floating
               label.control-label(for='email') Email
               input#email.form-control(

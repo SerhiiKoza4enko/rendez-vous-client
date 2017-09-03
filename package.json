@@ -125,6 +125,7 @@
     "ngx-quill": "1.3.0",
     "node-sass": "4.5.0",
     "owl.carousel": "2.2.0",
+    "popper.js": "^1.12.5",
     "pug": "2.0.0-beta9",
     "reflect-metadata": "0.1.9",
     "resolve-url-loader": "2.0.2",

@@ -2,7 +2,7 @@ section.booking(tjsMaterialize)
   h3.center('*ngIf'='view !== "room"') {{ viewDate | calendarDate:(view + 'ViewTitle'):'ru' }}
   h4.center('*ngIf'='view === "day"') {{ selectedRoom.name }} ({{ selectedRoom.square }} кв.м., {{ selectedRoom.capacity }} чел.)
   .row
-    .col-xs-1
+    .col-1
       .nav-button.prev-month(
         'mwlCalendarPreviousView'
         '[view]'='view',
@@ -18,7 +18,7 @@ section.booking(tjsMaterialize)
         '(click)'='view="room"'
         '*ngIf'='view === "day"'
       )
-    .col-xs-10.background-white
+    .col-10.background-white
       div('[ngSwitch]'='view')
         mwl-calendar-month-view(
           *ngSwitchCase="'month'"
@@ -29,24 +29,27 @@ section.booking(tjsMaterialize)
           '[dayModifier]'='dayModifier'
           '(dayClicked)'='daySelect($event.day.date)'
         )
-        .row.rv-bg-malahit-important(*ngSwitchCase='"room"')
+        .row.background-green(*ngSwitchCase='"room"')
           div(
             '*ngFor'='let room of rooms'
-            class='col-xs-{{roomCols}} pointer room'
+            class='col-6 col-lg-4 pointer'
             '(click)'='selectRoom(room)'
           )
-            img(
-              '[src]'='room.image'
-            )
-            span.title-wrp
-              span.title {{ room.name }}
-              span.description
-                | Площадь: {{ room.square }} кв.м.
-              span.description
-                | Количество человек: {{ room.capacity }}
-              span.description(
-                '[innerHTML]'='room.description'
-              )
+            .grid.center-block
+              figure.effect-zoe
+                img.img-responsive.center-block(
+                  '[src]'='room.image'
+                )
+                figcaption
+                  h2.center {{ room.name }}
+                  p.description
+                    span
+                      | Площадь: {{ room.square }} кв.м.
+                    span
+                      | Количество человек: {{ room.capacity }}
+                    span(
+                      '[innerHTML]'='room.description'
+                    )
         mwl-calendar-day-view(
           *ngSwitchCase='"day"'
           '[viewDate]'='viewDate'
@@ -56,10 +59,8 @@ section.booking(tjsMaterialize)
           '[dayEndHour]'='endHours'
           '(hourSegmentClicked)'='timeSelect($event)'
           '(eventClicked)'='eventClicked($event)'
-          '(mouseenter)'='disableScroll()'
-          '(mouseleave)'='enableScroll()'
         )
-    .col-xs-1
+    .col-1
       .nav-button.next-month(
         'mwlCalendarNextView'
         '[view]'='view',

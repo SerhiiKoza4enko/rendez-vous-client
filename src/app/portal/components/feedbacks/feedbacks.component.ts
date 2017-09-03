@@ -78,11 +78,10 @@ export class FeedbacksComponent implements OnInit {
   }
 
   public addFeedback(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(FeedbackModalComponent, { backdrop: 'static' });
     modalRef.result.then(
-      () => $.fn.fullpage.setMouseWheelScrolling(true),
-      () => $.fn.fullpage.setMouseWheelScrolling(true)
+      () => null,
+      () => null
     );
   }
 
