@@ -147,7 +147,6 @@ export class LayoutComponent implements OnInit {
     }
     this.userService.logout();
     this.user = undefined;
-    this.fullpageService.silentMoveTo(1);
   }
 
   public loadPages() {

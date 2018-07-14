@@ -10,6 +10,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import * as jQuery from 'jquery';
 import * as moment from 'moment';
+import tz from 'moment-timezone';
 import * as swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -84,6 +85,7 @@ export class BookingModalComponent implements OnInit {
   @Input() public minTime: NgbTimeStruct;
   @Input() public maxTime: NgbTimeStruct;
   @Input() public room: string;
+  @Input() public knowRules: boolean;
 
   public timeRange: any;
   public dateRange: any;
@@ -142,7 +144,6 @@ export class BookingModalComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.maxTime.hour++;
     if (this.booking && this.booking.id) {
       this.timeRange = {
         start: this.getTimeStruct(this.booking.start_time),
@@ -190,7 +191,7 @@ export class BookingModalComponent implements OnInit {
           text += response.busy
             .map((booking: IBooking) => moment(booking.start_time).format('DD.MM.YYYY'))
             .join(', ');
-          text += ` эта комната уже занята в выбранное Вами время. 
+          text += ` эта комната уже занята в выбранное Вами время.
                     Пожалуйста выберите другое время для этих дней и забронируйте отдельно.`;
         }
         (<any> swal)({
@@ -202,8 +203,8 @@ export class BookingModalComponent implements OnInit {
           showCloseButton: true
         });
         this.modalInstance.close(bookings.map((item: IBooking) => {
-          item.start_time = moment(item.start_time).toDate();
-          item.end_time = moment(item.end_time).toDate();
+          item.start_time = moment(item.start_time.toString().split('+')[0]).toDate();
+          item.end_time = moment(item.end_time.toString().split('+')[0]).toDate();
           item.days_of_week =
             item.days_of_week && item.days_of_week.length
               ? (<string> item.days_of_week).split(',')
@@ -266,12 +267,12 @@ export class BookingModalComponent implements OnInit {
     };
   }
 
-  private getDateFromTimeStruct(time: NgbTimeStruct): Date {
-    let m = moment(this.selected);
+  private getDateFromTimeStruct(time: NgbTimeStruct): any {
+    let m = tz(this.selected).tz('Europe/Zaporozhye');
     m.hour(time.hour);
     m.minute(time.minute);
     m.second(time.second);
-    return m.toDate();
+    return m.format();
   }
 
   private getDateFromDateStruct(date: NgbDateStruct): Date {
@@ -287,8 +288,8 @@ export class BookingModalComponent implements OnInit {
   }
 
   private generatePeriodId(): string {
-    return (this.booking.start_time.getHours() * 60
-      + this.booking.start_time.getMinutes()).toString()
+    return (moment(this.booking.start_time).hours() * 60
+      + moment(this.booking.start_time).minutes()).toString()
       + this.userId;
   }
 }

@@ -217,6 +217,8 @@
 /* For some effects it will show as a button */
 
 figure.effect-zoe {
+  min-height: 260px;
+
   figcaption {
     top: auto;
     bottom: 0;
@@ -269,13 +271,13 @@ figure.effect-zoe {
     text-align: center;
     left: 0px;
     position: absolute;
-    bottom: 2em;
-    padding: 52px;
+    bottom: 1em;
+    padding: 45px;
     color: #fff;
     text-transform: none;
-    font-size: 1.3em;
+    font-size: 1em;
     opacity: 0;
-    line-height: 40px;
+    line-height: 30px;
     font-weight: bold;
     -webkit-transition: opacity 0.35s;
     transition: opacity 0.35s;

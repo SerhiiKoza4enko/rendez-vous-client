@@ -83,7 +83,6 @@ export class AdminRoomsComponent implements OnInit {
     let newRoom: IRoom = <IRoom> {};
     let result: Promise<IRoom> = this.openModal(newRoom);
     result.then((roomRes: IRoom) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.roomService.save(roomRes)
         .$observable.
         subscribe((roomCreated: IRoom) => {
@@ -94,7 +93,6 @@ export class AdminRoomsComponent implements OnInit {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
@@ -111,7 +109,6 @@ export class AdminRoomsComponent implements OnInit {
     let updateRows: any = [];
     let result: Promise<IRoom> = this.openModal(room);
     result.then((roomRes: IRoom) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.roomService.update(roomRes)
         .$observable.
         subscribe((roomUpdated: IRoom) => {
@@ -124,13 +121,11 @@ export class AdminRoomsComponent implements OnInit {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
 
   private openModal(room: IRoom): Promise<IRoom> {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(AdminRoomModalComponent, { backdrop: 'static' });
     modalRef.componentInstance.room = Object.assign({}, room);
     return modalRef.result;

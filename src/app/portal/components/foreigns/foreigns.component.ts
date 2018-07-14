@@ -69,20 +69,11 @@ export class ForeignsComponent implements OnInit {
   }
 
   public addForeign(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(ForeignModalComponent, { backdrop: 'static' });
     modalRef.result.then(
-      () => $.fn.fullpage.setMouseWheelScrolling(true),
-      () => $.fn.fullpage.setMouseWheelScrolling(true)
+      () => null,
+      () => null
     );
-  }
-
-  public disableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
-  }
-
-  public enableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(true);
   }
 
   private loadForeigns() {

@@ -1,17 +1,13 @@
-section.admin-room-modal(tjsMaterialize)
+section.admin-room-modal.portfolio-modal(tjsMaterialize)
   form(
     '(ngSubmit)'='addRoom()'
     '#roomForm'='ngForm'
   )
     .modal-header
-      button.close(
-        type='button'
-        role='button'
-        aria-label='Close'
-        '(click)'='modalInstance.dismiss()'
-      )
-        span(aria-hidden='true') ×
-      h4.modal-title
+      .close-modal('(click)'='modalInstance.dismiss()')
+          .lr
+            .rl
+      h4.modal-title.center
         span
           | Комната
     .modal-body

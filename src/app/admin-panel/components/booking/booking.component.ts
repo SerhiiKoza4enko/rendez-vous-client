@@ -64,7 +64,9 @@ export class AdminBookingComponent implements OnInit {
 
   public user: IUser;
   public roomCols: number;
+  private _loadCompleted: boolean;
 
+  // tslint:disable-next-line:member-ordering
   public actions: CalendarEventAction[] = [{
     label: `<i class="fa fa-trash"></i>`,
     onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -94,6 +96,7 @@ export class AdminBookingComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this._loadCompleted = true;
     this.loadBookings();
   }
 
@@ -105,8 +108,8 @@ export class AdminBookingComponent implements OnInit {
       .$observable
       .subscribe((bookings: IBooking[]) => {
         this.bookings = bookings.map((item: IBooking) => {
-          item.start_time = moment(item.start_time).toDate();
-          item.end_time = moment(item.end_time).toDate();
+          item.start_time = moment(item.start_time.toString().split('+')[0]).toDate();
+          item.end_time = moment(item.end_time.toString().split('+')[0]).toDate();
           item.days_of_week =
             item.days_of_week && item.days_of_week.length
               ? (<string> item.days_of_week).split(',')
@@ -124,12 +127,16 @@ export class AdminBookingComponent implements OnInit {
   }
 
   public timeSelect(event: any, booking?: IBooking): void {
+    if (!this._loadCompleted) {
+      this.toastr.warning(`Дожитесь, пожалуйста, полной загрузки страницы.`);
+      return;
+    }
     let date: Date = event.date;
     let todaysBookings = this.bookings.filter((b: IBooking) => {
       return moment(b.start_time).startOf('month').isSame(moment(date).startOf('month'));
     });
     let minTime: moment.Moment = moment(date).hour(this.startHours).minute(0).second(0);
-    let maxTime: moment.Moment = moment(date).hour(this.endHours).minute(0).second(0);
+    let maxTime: moment.Moment = moment(date).hour(this.endHours + 1).minute(0).second(0);
     todaysBookings.forEach((b: IBooking) => {
       if (
         (moment(b.end_time).isBefore(moment(date)) || moment(b.end_time).isSame(moment(date)))
@@ -208,14 +215,6 @@ export class AdminBookingComponent implements OnInit {
       .catch((<any> swal).noop);
   }
 
-  public disableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
-  }
-
-  public enableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(true);
-  }
-
   private removeBooking(booking: IBooking, removeAll: boolean): void {
     this.bookingService.delete({ id: booking.id, all: removeAll })
       .$observable
@@ -256,7 +255,8 @@ export class AdminBookingComponent implements OnInit {
     modalRef.componentInstance.selected = date;
     modalRef.componentInstance.minTime = min;
     modalRef.componentInstance.maxTime = max;
-    modalRef.componentInstance.room = this.selectedRoom;
+    modalRef.componentInstance.room = this.selectedRoom.id;
+    modalRef.componentInstance.knowRules = true;
 
     modalRef.result.then((bookings: IBooking[]) => {
       if (bookings && bookings.length) {
@@ -325,6 +325,7 @@ export class AdminBookingComponent implements OnInit {
         };
         return event;
       });
+    this._loadCompleted = true;
   }
 
   private hexToRgb(hex: string, opacity: number): string {

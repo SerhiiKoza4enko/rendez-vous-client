@@ -5,10 +5,8 @@ section.admin-feedbacks(tjsMaterialize)
     '(gridReady)'='onGridReady($event)'
     '(rowClicked)'='onRowClicked($event)'
   )
-  .row.center
-    .col-xs.center
-      ngb-pagination.center(
-        '[collectionSize]'='feedbacks?.length'
-        '[(page)]'="page"
-        '(pageChange)'='pageChanged(page)'
-      )
+  ngb-pagination.center.d-flex.justify-content-center(
+    '[collectionSize]'='feedbacks?.length'
+    '[(page)]'="page"
+    '(pageChange)'='pageChanged(page)'
+  )

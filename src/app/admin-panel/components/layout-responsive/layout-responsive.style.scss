@@ -1,5 +1,5 @@
 @import '../../../../assets/scss/_variables';
-.portal {
+.admin {
   .contacts {
     height: 500px;
     padding: 0;
@@ -38,5 +38,11 @@
     margin: 0;
     padding: 0 .5em;
     color: $theme-light !important;
+  }
+  .masthead {
+    h2 {
+      color: #fff;
+      font-size: 3em;
+    }
   }
 }

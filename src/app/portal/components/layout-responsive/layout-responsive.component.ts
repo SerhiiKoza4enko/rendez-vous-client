@@ -133,7 +133,6 @@ export class LayoutResponsiveComponent implements OnInit {
   public logout() {
     this.userService.logout();
     this.user = undefined;
-    this.fullpageService.silentMoveTo(1);
   }
 
   public loadPages() {

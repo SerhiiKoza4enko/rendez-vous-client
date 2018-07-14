@@ -61,7 +61,6 @@ export class AdminForeignsComponent implements OnInit {
       if (target === 'BUTTON' || target === 'I') {
         let result: Promise<IForeign> = this.openModal(foreign);
         result.then((foreignRes: IForeign) => {
-          $.fn.fullpage.setMouseWheelScrolling(true);
           return this.foreignService.update(foreignRes)
             .$observable.
             subscribe((foreignUpdated: IForeign) => {
@@ -71,7 +70,6 @@ export class AdminForeignsComponent implements OnInit {
               this.gridOptions.api.onSortChanged();
             });
         }, () => {
-          $.fn.fullpage.setMouseWheelScrolling(true);
           return Observable.of(foreign);
         });
       }
@@ -89,7 +87,6 @@ export class AdminForeignsComponent implements OnInit {
   }
 
   private openModal(foreign: IForeign): Promise<IForeign> {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(AdminForeignModalComponent, { backdrop: 'static' });
     modalRef.componentInstance.foreign = Object.assign({}, foreign);
     return modalRef.result;
@@ -104,7 +101,7 @@ export class AdminForeignsComponent implements OnInit {
         field: 'checked',
         sort: 'asc',
         cellRenderer: (params: any) => {
-          return !params.data.checked ? `<button 
+          return !params.data.checked ? `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Просмотр'
                     container="body"
@@ -151,7 +148,7 @@ export class AdminForeignsComponent implements OnInit {
         suppressSorting: true,
         width: 28,
         cellRenderer: (params: any) => {
-          return `<button 
+          return `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Просмотр'
                     container="body"

@@ -88,7 +88,6 @@ export class AdminEventsComponent implements OnInit {
     let newEvent: IEvent = <IEvent> {};
     let result: Promise<IEvent> = this.openModal(newEvent);
     result.then((eventRes: IEvent) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.eventService.save(eventRes)
         .$observable.
         subscribe((eventCreated: IEvent) => {
@@ -99,7 +98,6 @@ export class AdminEventsComponent implements OnInit {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
@@ -108,7 +106,6 @@ export class AdminEventsComponent implements OnInit {
     let updateRows: any = [];
     let result: Promise<IEvent> = this.openModal(event);
     result.then((eventRes: IEvent) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.eventService.update(eventRes)
         .$observable.
         subscribe((eventUpdated: IEvent) => {
@@ -121,7 +118,6 @@ export class AdminEventsComponent implements OnInit {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
@@ -177,8 +173,10 @@ export class AdminEventsComponent implements OnInit {
   }
 
   private openModal(event: IEvent): Promise<IEvent> {
-    $.fn.fullpage.setMouseWheelScrolling(false);
-    const modalRef = this.modalService.open(AdminEventModalComponent, { backdrop: 'static' });
+    const modalRef = this.modalService.open(
+      AdminEventModalComponent,
+      { backdrop: 'static', windowClass: 'full-width-popup' }
+    );
     modalRef.componentInstance.event = Object.assign({}, event);
     return modalRef.result;
   }

@@ -5,14 +5,12 @@ section.admin-rooms(tjsMaterialize)
     '(gridReady)'='onGridReady($event)'
     '(rowClicked)'='onRowClicked($event)'
   )
-  .row.center
-    .col-xs.center
-      ngb-pagination.center(
-        '[collectionSize]'='rooms?.length'
-        '[(page)]'="page"
-        '[pageSize]'='4'
-        '(pageChange)'='pageChanged(page)'
-      )
+  ngb-pagination.center.d-flex.justify-content-center(
+    '[collectionSize]'='rooms?.length'
+    '[(page)]'="page"
+    '[pageSize]'='4'
+    '(pageChange)'='pageChanged(page)'
+  )
   .add-button
     button.btn.btn-success.btn-raised(
       role='button'

@@ -11,10 +11,7 @@ section.events(tjsMaterialize)
     .card('*ngFor'='let event of events')
       .row.px-1.py-1
         .col-xs-12
-          blockquote.blockquote(
-            '(mouseenter)'='disableScroll()'
-            '(mouseleave)'='enableScroll()'
-          )
+          blockquote.blockquote
             h2 {{ event.subject }}
             p.mb-0('[innerHTML]'='event.description | mySafeHtml')
             footer.blockquote-footer

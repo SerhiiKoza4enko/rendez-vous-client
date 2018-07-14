@@ -48,14 +48,6 @@ export class EventsComponent {
     this.loadEvents();
   }
 
-  public disableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(false);
-  }
-
-  public enableScroll(): void {
-    $.fn.fullpage.setMouseWheelScrolling(true);
-  }
-
   private loadEvents() {
     this.eventService.query()
       .$observable

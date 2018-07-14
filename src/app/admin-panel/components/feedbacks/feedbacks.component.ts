@@ -61,7 +61,6 @@ export class AdminFeedbacksComponent implements OnInit {
       if (target === 'BUTTON' || target === 'I') {
         let result: Promise<IFeedback> = this.openModal(feedback);
         result.then((feedbackRes: IFeedback) => {
-          $.fn.fullpage.setMouseWheelScrolling(true);
           return this.feedbackService.update(feedbackRes)
             .$observable.
             subscribe((feedbackUpdated: IFeedback) => {
@@ -71,7 +70,6 @@ export class AdminFeedbacksComponent implements OnInit {
               this.gridOptions.api.onSortChanged();
             });
         }, () => {
-          $.fn.fullpage.setMouseWheelScrolling(true);
           return Observable.of(feedback);
         });
       }
@@ -83,7 +81,6 @@ export class AdminFeedbacksComponent implements OnInit {
   }
 
   private openModal(feedback: IFeedback): Promise<IFeedback> {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(AdminFeedbackModalComponent, { backdrop: 'static' });
     modalRef.componentInstance.feedback = Object.assign({}, feedback);
     return modalRef.result;
@@ -104,7 +101,7 @@ export class AdminFeedbacksComponent implements OnInit {
         field: 'checked',
         sort: 'asc',
         cellRenderer: (params: any) => {
-          return !params.data.checked ? `<button 
+          return !params.data.checked ? `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Просмотр'
                     container="body"
@@ -143,48 +140,48 @@ export class AdminFeedbacksComponent implements OnInit {
           return `<div class="rating">
                     <div class="stars">
                       <form action="">
-                        <input 
+                        <input
                           class="star star-5"
-                          id="star-5" 
+                          id="star-5"
                           type="radio"
                           name="star"
-                          disabled 
+                          disabled
                           ` + (params.data.mark === '5' ? 'checked' : '') +
             `/>
                         <label class="star star-5" for="star-5"></label>
-                        <input 
+                        <input
                           class="star star-4"
-                          id="star-4" 
+                          id="star-4"
                           type="radio"
                           name="star"
-                          disabled 
+                          disabled
                           ` + (params.data.mark === '4' ? 'checked' : '') +
             `/>
                         <label class="star star-4" for="star-4"></label>
-                        <input 
+                        <input
                           class="star star-3"
-                          id="star-3" 
+                          id="star-3"
                           type="radio"
                           name="star"
-                          disabled 
+                          disabled
                           ` + (params.data.mark === '3' ? 'checked' : '') +
             `/>
                         <label class="star star-3" for="star-3"></label>
-                        <input 
+                        <input
                           class="star star-2"
-                          id="star-2" 
+                          id="star-2"
                           type="radio"
                           name="star"
-                          disabled 
+                          disabled
                           ` + (params.data.mark === '2' ? 'checked' : '') +
             `/>
                         <label class="star star-2" for="star-2"></label>
-                        <input 
+                        <input
                           class="star star-1"
-                          id="star-1" 
+                          id="star-1"
                           type="radio"
                           name="star"
-                          disabled 
+                          disabled
                           ` + (params.data.mark === '1' ? 'checked' : '') +
             `/>
                         <label class="star star-1" for="star-1"></label>
@@ -213,7 +210,7 @@ export class AdminFeedbacksComponent implements OnInit {
         suppressSorting: true,
         width: 28,
         cellRenderer: (params: any) => {
-          return `<button 
+          return `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Просмотр'
                     container="body"

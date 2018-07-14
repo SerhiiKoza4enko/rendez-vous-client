@@ -11,8 +11,8 @@
 @import '~owl.carousel/dist/assets/owl.theme.default.css';
 @import '~sweetalert2/dist/sweetalert2.css';
 @import '~angular-calendar/dist/css/angular-calendar.css';
-// @import '~ag-grid/dist/styles/ag-grid.css';
-// @import '~ag-grid/dist/styles/theme-material.css';
+@import '~ag-grid/dist/styles/ag-grid.css';
+@import '~ag-grid/dist/styles/theme-material.css';
 
 @import 'assets/scss/freelancer.scss';
 
@@ -27,3 +27,42 @@
 .background-green {
   background: $theme-success !important;
 }
+
+.sebm-google-map-info-window-content {
+  line-height: 1em;
+}
+
+.success {
+  .ag-body {
+    background-color: transparent;
+    .ag-row {
+      color: white;
+    }
+    .ag-row:hover {
+      background-color: $theme-primary;
+    }
+    .ag-row-even {
+      background-color: $theme-success;
+    }
+    .ag-row-odd {
+      background-color: $theme-primary;
+    }
+    .fa {
+      color: white;
+    }
+  }
+}
+
+.full-width-popup {
+  .modal-dialog {
+    max-width: 100% !important;
+    margin: 0;
+  }
+}
+
+.modal-title {
+  text-align: center;
+  width: 100%;
+  margin-top: -1em;
+}
+

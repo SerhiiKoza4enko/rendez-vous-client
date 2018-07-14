@@ -1,17 +1,13 @@
-section.admin-event-modal(tjsMaterialize)
+section.admin-event-modal.portfolio-modal(tjsMaterialize)
   form(
     '(ngSubmit)'='addEvent()'
     '#eventForm'='ngForm'
   )
     .modal-header
-      button.close(
-        type='button'
-        role='button'
-        aria-label='Close'
-        '(click)'='modalInstance.dismiss()'
-      )
-        span(aria-hidden='true') ×
-      h4.modal-title
+      .close-modal('(click)'='modalInstance.dismiss()')
+          .lr
+            .rl
+      h4.modal-title.center
         span
           | Мероприятие
     .modal-body
@@ -22,7 +18,7 @@ section.admin-event-modal(tjsMaterialize)
           '[(ngModel)]'='event.subject'
           '#subject'='ngModel'
         )
-      .form-group.label-floating
+      .form-group.label-floating.tinymce-container
         app-tinymce#description(
           name='description'
           '[formControl]'='content'

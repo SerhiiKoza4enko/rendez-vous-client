@@ -11,13 +11,27 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
         span
           | Забронировать комнату
     .modal-body
-      .row
-        .form-group.col-xs-12.no-margin
-          | Убедительно просим Вас в случае отмены брони сообщать об этом (можно по телефону). В противном случае Вы окажитесь в "черном списке" с последующим отказом в бронировании.
-        .form-group.col-xs-12.red.no-margin
-          | NB: если вы проводите дополнительные 15 мин., 20 мин. или 25 мин. в арендованном пространстве, вы оплачиваете это время как дополнительные 30 мин.
-        .form-group.col-xs-12.no-margin
-          | Спасибо за понимание.
+      //- .row
+      //-   .form-group.col-xs-12.no-margin
+      //-     | Убедительно просим Вас в случае отмены брони сообщать об этом (можно по телефону). В противном случае Вы окажитесь в "черном списке" с последующим отказом в бронировании.
+      //-   .form-group.col-xs-12.red.no-margin
+      //-     | NB: если вы проводите дополнительные 15 мин., 20 мин. или 25 мин. в арендованном пространстве, вы оплачиваете это время как дополнительные 30 мин.
+      //-   .form-group.col-xs-12.no-margin
+      //-     | Спасибо за понимание.
+      .form-group.label-floating
+        .checkbox
+          label(for='knowRules')
+            input#knowRules(
+              name='knowRules'
+              type='checkbox'
+              '[(ngModel)]'='knowRules'
+            )
+            | &nbsp;С&nbsp;
+            a.rules(
+              data-toggle="modal"
+              data-target="#rules"
+            ) правилами бронирования
+            |  &nbsp;ознакомлен.
       .row
         .form-group.col-xs-6
           label.control-label(for='title') Начало занятия
@@ -26,6 +40,7 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
             '[(ngModel)]'='timeRange.start'
             '[meridian]'=false
             '[formControl]'='startTimeControl'
+            '[disabled]'='!knowRules'
           )
           small.text-danger('*ngIf'='!startTimeControl.valid')
             span('*ngIf'='startTimeControl.errors && startTimeControl.errors["minBusy"]') Эта комната занята до {{ timeSpnaToString(minTime) }}.
@@ -36,6 +51,7 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
             '[(ngModel)]'='timeRange.end'
             '[meridian]'=false
             '[formControl]'='endTimeControl'
+            '[disabled]'='!knowRules'
           )
           small.text-danger('*ngIf'='!endTimeControl.valid')
             span('*ngIf'='endTimeControl.errors && endTimeControl.errors["maxBusy"]') Эта комната занята после {{ timeSpnaToString(maxTime) }}.
@@ -47,6 +63,7 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
               type='checkbox'
               '[(ngModel)]'='booking.periodic'
               '#isPeriodic'='ngModel'
+              '[disabled]'='!knowRules'
             )
             | Периодическое занятие?
       .form-group.label-floating.row.days-div('[hidden]'='!booking.periodic')
@@ -98,6 +115,7 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
           type='text'
           '[(ngModel)]'='booking.title'
           '#title'='ngModel'
+          '[disabled]'='!knowRules'
         )
     .modal-footer
       button.btn.btn-secondary(
@@ -112,8 +130,29 @@ section.booking-modal.portfolio-modal(tjsMaterialize)
         type='button'
         role='button'
         '(click)'='addBooking()'
-        '[disabled]'='!bookingForm.form.valid || !startTimeControl.valid || !endTimeControl.valid'
+        '[disabled]'='!bookingForm.form.valid || !startTimeControl.valid || !endTimeControl.valid || !knowRules'
       )
         i.fa.fa-fw.fa-floppy-o
         | &nbsp;
         | Сохранить
+.modal.fade.rulesModal#rules(
+  role='dialog'
+  aria-hidden="true"
+)
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-body
+        p.ruleRow Правила бронирования (будем благодарны за их соблюдение):
+        p 1. Вы оплачиваете то количество часов аренды, которое Вы забронировали. Изменения в бронировании принимаются до 12.00 текущего дня. Если изменения произошли после указанного времени, вы оплачиваете 30% от того времени, которое вы изменили.
+        p 2. Если Вы не пришли на забронированное Вами время и не сообщили об этом координатору, Вы попадаете в "черный список" с дальнейшим отказом в аренде.
+        p 3. Для комфорта и удобства каждого участника творческого процесса мы оставляем за собой право менять забронированное Вами пространство. Стоимость аренды сохраняется первоначальная.
+        p 4. Если Ваше мероприятие задерживается на более, чем 15 минут, вы оплачиваете дополнительные 30 минут аренды пространства.
+        button.btn.btn-success(
+          type='button'
+          role='button'
+          '(click)'='knowRules=true'
+          data-dismiss='modal'
+        )
+          i.fa.fa-fw.fa-check
+          | &nbsp;
+          | Ознакомлен

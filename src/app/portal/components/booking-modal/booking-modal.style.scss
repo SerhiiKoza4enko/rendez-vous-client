@@ -34,4 +34,18 @@
      margin-bottom: 0;
      margin-top: 0;
    }
+   a.rules {
+     color: #18bc9c;
+     cursor: pointer;
+     &:hover {
+      color: #18bc9c;
+      text-decoration: underline;
+     }
+   }
+    .form-group {
+      // margin: 20px 0 0;
+    }
+ }
+ .rulesModal p {
+   font-size: 1em;
  }

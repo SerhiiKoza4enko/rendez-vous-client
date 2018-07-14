@@ -1,16 +1,12 @@
-section.feedback-modal(tjsMaterialize)
+section.feedback-modal.portfolio-modal(tjsMaterialize)
   form(
     '(ngSubmit)'='addFeedback()'
     '#feedbackForm'='ngForm'
   )
     .modal-header
-      button.close(
-        type='button'
-        role='button'
-        aria-label='Close'
-        '(click)'='modalInstance.dismiss()'
-      )
-        span(aria-hidden='true') ×
+      .close-modal('(click)'='modalInstance.dismiss()')
+          .lr
+            .rl
       h4.modal-title
         span
           | Отзыв

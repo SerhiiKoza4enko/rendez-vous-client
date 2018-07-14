@@ -69,24 +69,23 @@ let options: ToastOptions = new ToastOptions({
         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code fullscreen',
         'insertdatetime media nonbreaking save table contextmenu directionality',
-        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help',
+        'autoresize'
       ],
       language: 'ru',
       automatic_uploads: true,
-      toolbar: `undo redo |
+      toolbar: `undo |
                 styleselect |
                 sizeselect |
                 fontselect |
                 fontsizeselect |
                 bold italic |
-                alignleft aligncenter alignright alignjustify |
-                bullist numlist outdent indent |
-                link image |
-                preview |
-                forecolor backcolor emoticons`,
+                alignleft aligncenter alignright |
+                bullist numlist |
+                forecolor`,
       fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
       file_browser_callback_types: 'file image media',
-      height: 400,
+      min_width: 750,
       file_picker_callback: (callback: any, value: any, meta: any) => {
         if (meta.filetype === 'image') {
           $('#upload').trigger('click');

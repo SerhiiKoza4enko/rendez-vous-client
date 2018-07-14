@@ -1,4 +1,4 @@
-.portal
+.admin
   nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
     .container
       a.navbar-brand.js-scroll-trigger(href='#main')
@@ -20,20 +20,17 @@
       #navbarResponsive.collapse.navbar-collapse
         ul.navbar-nav.ml-auto
           li.nav-item
-            a.nav-link.js-scroll-trigger(href='#main',(click)="collapseNav()") Творческое пространство
+            a.nav-link.js-scroll-trigger(href='admin#pages',(click)="collapseNav()") Творческое пространство
           li.nav-item
-            a.nav-link.js-scroll-trigger(href='#events',(click)="collapseNav()") Мероприятия
+            a.nav-link.js-scroll-trigger(href='admin#events',(click)="collapseNav()") Мероприятия
           li.nav-item
-            a.nav-link.js-scroll-trigger(href='#feedbacks',(click)="collapseNav()") Отзывы
+            a.nav-link.js-scroll-trigger(href='admin#users',(click)="collapseNav()") Пользователи
           li.nav-item
-            a.nav-link.js-scroll-trigger(href='#contacts',(click)="collapseNav()") Контакты
+            a.nav-link.js-scroll-trigger(href='admin#feedbacks',(click)="collapseNav()") Отзывы
           li.nav-item
-            a.nav-link.js-scroll-trigger(href='#booking',(click)="collapseNav()") Бронирование
-          li.nav-item(
-            '*ngIf'='user?.role === "admin"'
-            routerLinkActive='active'
-          )
-            a.nav-link.js-scroll-trigger(routerLink='/admin') Админ панель
+            a.nav-link.js-scroll-trigger(href='admin#booking',(click)="collapseNav()") Бронирование
+          li.nav-item
+            a.nav-link.js-scroll-trigger(href='admin#rooms',(click)="collapseNav()") Комнаты
           li.nav-item.auth-control('*ngIf'="user")
             a.nav-link.user-profile-link(
               role='button'
@@ -63,28 +60,32 @@
                 role='button'
                 '(click)'='signUp()'
               ) Регистрация
-  // Header
-  header.masthead#main
-    .container
-      .row
-        .col-xs.black-text
-          div(
-            '[innerHTML]'='pages.about | mySafeHtml'
-            '*ngIf'='pages'
-          )
-  // Events Section
+  // Booking Section
+  header.masthead#pages
+    .full-width.container
+      h2.text-center Творческое пространство
+      hr.star-light
+      pages
   section#events
     .full-width.container
       h2.text-center Мероприятия
+      hr.star-primary
       events
-  // Feedbacks Section
-  section#feedbacks.success
+  section#users.success
+    .full-width.container
+      h2.text-center Пользователи
+      hr.star-light
+      users
+  section#feedbacks
     .full-width.container
       h2.text-center Отзывы
+      hr.star-primary
       feedbacks
-  // Contact Section
-  section#contacts.full-width.contacts
-    contacts
-  // Booking Section
-  section#booking.success.full-width.black-text
-    booking
+  section#rooms.success
+    .full-width.container
+      h2.text-center Комнаты
+      hr.star-light
+      rooms
+  section#booking
+    .full-width.black-text.container
+      booking

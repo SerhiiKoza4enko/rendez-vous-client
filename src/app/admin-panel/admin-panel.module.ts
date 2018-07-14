@@ -8,6 +8,7 @@ import { ROUTES } from './admin-panel.routes';
 import { CoreModule } from '../core';
 
 import { AdminLayoutComponent } from './components/layout';
+import { AdminLayoutResponsiveComponent } from './components/layout-responsive';
 import { AdminUsersComponent } from './components/users';
 import { AdminFeedbacksComponent } from './components/feedbacks';
 import { AdminFeedbackModalComponent } from './components/feedback-modal';
@@ -32,6 +33,7 @@ import { AdminRoomModalComponent } from './components/room-modal';
   ],
   exports: [
     AdminLayoutComponent,
+    AdminLayoutResponsiveComponent,
     AdminUsersComponent,
     AdminFeedbacksComponent,
     AdminFeedbackModalComponent,
@@ -48,6 +50,7 @@ import { AdminRoomModalComponent } from './components/room-modal';
   ],
   declarations: [
     AdminLayoutComponent,
+    AdminLayoutResponsiveComponent,
     AdminUsersComponent,
     AdminFeedbacksComponent,
     AdminFeedbackModalComponent,

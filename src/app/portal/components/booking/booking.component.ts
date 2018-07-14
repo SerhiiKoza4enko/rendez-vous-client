@@ -70,6 +70,7 @@ export class BookingComponent implements OnInit {
       this.removeClick(event);
     }
   }];
+  private _loadCompleted: boolean;
 
   constructor(
     private modalService: NgbModal,
@@ -94,14 +95,19 @@ export class BookingComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.storage.observe('currentuser').subscribe((user: any) => {
-      if (user) {
-        this.user = user;
-        this.loadBookings();
-      } else {
-        this.user = <IUser> { id: '' };
-      }
-    });
+    this._loadCompleted = false;
+    if (!this.user) {
+      this.storage.observe('currentuser').subscribe((user: any) => {
+        if (user) {
+          this.user = user;
+          this.loadBookings();
+        } else {
+          this.user = <IUser> { id: '' };
+        }
+      });
+    } else {
+      this.loadBookings();
+    }
   }
 
   public loadBookings(): void {
@@ -112,8 +118,8 @@ export class BookingComponent implements OnInit {
       .$observable
       .subscribe((bookings: IBooking[]) => {
         this.bookings = bookings.map((item: IBooking) => {
-          item.start_time = moment(item.start_time).toDate();
-          item.end_time = moment(item.end_time).toDate();
+          item.start_time = moment(item.start_time.toString().split('+')[0]).toDate();
+          item.end_time = moment(item.end_time.toString().split('+')[0]).toDate();
           item.days_of_week =
             item.days_of_week && item.days_of_week.length
               ? (<string> item.days_of_week).split(',')
@@ -131,13 +137,26 @@ export class BookingComponent implements OnInit {
   }
 
   public timeSelect(event: any, booking?: IBooking): void {
+    if (!this._loadCompleted) {
+      this.toastr.warning(`Дожитесь, пожалуйста, полной загрузки страницы.`);
+      return;
+    }
     let date: Date = event.date;
     let todaysBookings = this.bookings.filter((b: IBooking) => {
       return moment(b.start_time).startOf('month').isSame(moment(date).startOf('month'));
     });
     let minTime: moment.Moment = moment(date).hour(this.startHours).minute(0).second(0);
-    let maxTime: moment.Moment = moment(date).hour(this.endHours).minute(0).second(0);
+    let maxTime: moment.Moment = moment(date).hour(this.endHours + 1).minute(0).second(0);
+    let openWindow: boolean = true;
     todaysBookings.forEach((b: IBooking) => {
+      if ((moment(b.start_time).isBefore(moment(date)) || moment(b.start_time).isSame(moment(date)))
+        && moment(b.end_time).isAfter(moment(date))
+      ) {
+        this.toastr.warning(`Это время уже занято`);
+        openWindow = false;
+        return;
+      }
+
       if (
         (moment(b.end_time).isBefore(moment(date)) || moment(b.end_time).isSame(moment(date)))
         && moment(b.end_time).isAfter(minTime)
@@ -155,7 +174,9 @@ export class BookingComponent implements OnInit {
         maxTime = moment(b.start_time);
       }
     });
-    this.open(booking, date, this.getTimeStruct(minTime), this.getTimeStruct(maxTime));
+    if (openWindow) {
+      this.open(booking, date, this.getTimeStruct(minTime), this.getTimeStruct(maxTime));
+    }
   }
 
   public eventClicked(event: any): void {
@@ -257,7 +278,7 @@ export class BookingComponent implements OnInit {
         });
         this.roomCols = Math.ceil(12 / Math.ceil(this.rooms.length / 2));
         this.roomCols = this.roomCols === 12 && this.rooms.length > 1 ? 6 : this.roomCols;
-        this.loadBookings();
+        // this.loadBookings();
       });
   }
 
@@ -269,6 +290,7 @@ export class BookingComponent implements OnInit {
     modalRef.componentInstance.minTime = min;
     modalRef.componentInstance.maxTime = max;
     modalRef.componentInstance.room = this.selectedRoom.id;
+    modalRef.componentInstance.knowRules = false;
 
     modalRef.result.then((bookings: IBooking[]) => {
       if (bookings && bookings.length) {
@@ -329,6 +351,7 @@ export class BookingComponent implements OnInit {
         };
         return event;
       });
+    this._loadCompleted = true;
   }
 
   private hexToRgb(hex: string, opacity: number): string {

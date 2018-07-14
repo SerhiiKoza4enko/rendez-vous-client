@@ -84,7 +84,6 @@ export class AdminGalleryComponent {
     let newPhoto: IPhoto = <IPhoto> {};
     let result: Promise<IPhoto> = this.openModal(newPhoto);
     result.then((photoRes: IPhoto) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.photoService.save(photoRes)
         .$observable.
         subscribe((photoCreated: IPhoto) => {
@@ -95,7 +94,6 @@ export class AdminGalleryComponent {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
@@ -104,7 +102,6 @@ export class AdminGalleryComponent {
     let updateRows: any = [];
     let result: Promise<IPhoto> = this.openModal(photo);
     result.then((photoRes: IPhoto) => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return this.photoService.update(photoRes)
         .$observable.
         subscribe((photoUpdated: IPhoto) => {
@@ -117,7 +114,6 @@ export class AdminGalleryComponent {
           this.toastr.error('Во время сохранения произошла ошибка.');
         });
     }, () => {
-      $.fn.fullpage.setMouseWheelScrolling(true);
       return Observable.of(event);
     });
   }
@@ -173,7 +169,6 @@ export class AdminGalleryComponent {
   }
 
   private openModal(photo: IPhoto): Promise<IPhoto> {
-    $.fn.fullpage.setMouseWheelScrolling(false);
     const modalRef = this.modalService.open(AdminPhotoModalComponent, { backdrop: 'static' });
     modalRef.componentInstance.photo = Object.assign({}, photo);
     return modalRef.result;
@@ -207,14 +202,14 @@ export class AdminGalleryComponent {
         suppressSorting: true,
         width: 28,
         cellRenderer: (params: any) => {
-          return `<button 
+          return `<button
                     class="btn btn-info btn-fab-mini"
                     ngbTooltip='Изменить'
                     container="body"
                     placement="top"
                     action="edit">
                     <i class="fa fa-pencil"></i>
-                  </button><button 
+                  </button><button
                     class="btn btn-danger btn-fab-mini"
                     ngbTooltip='Удалить'
                     container="body"

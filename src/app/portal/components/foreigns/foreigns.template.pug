@@ -11,10 +11,7 @@ section.foreigns(tjsMaterialize)
     .card('*ngFor'='let foreign of foreigns')
       .row.px-1.py-1
         .col-xs-12
-          blockquote.blockquote(
-            '(mouseenter)'='disableScroll()'
-            '(mouseleave)'='enableScroll()'
-          )
+          blockquote.blockquote
             p.mb-0('[innerHTML]'='foreign.description | mySafeHtml')
             footer.blockquote-footer
               | {{ foreign.user.lastname }} {{ foreign.user.firstname }}
