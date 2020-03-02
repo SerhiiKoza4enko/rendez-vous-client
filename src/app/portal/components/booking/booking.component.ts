@@ -151,6 +151,7 @@ export class BookingComponent implements OnInit {
     todaysBookings.forEach((b: IBooking) => {
       if ((moment(b.start_time).isBefore(moment(date)) || moment(b.start_time).isSame(moment(date)))
         && moment(b.end_time).isAfter(moment(date))
+        && (<IRoom> b.room).id === this.selectedRoom.id
       ) {
         this.toastr.warning(`Это время уже занято`);
         openWindow = false;
