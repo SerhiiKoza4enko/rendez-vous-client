@@ -43,13 +43,14 @@ section.booking(tjsMaterialize)
                 figcaption
                   h2.center {{ room.name }}
                   p.description
+                    i.fa.fa-info-circle('(click)'='openRoomInfo(room); $event.stopPropagation();')
                     span
                       | Площадь: {{ room.square }} кв.м.
                     span
                       | Количество человек: {{ room.capacity }}
-                    span(
-                      '[innerHTML]'='room.description'
-                    )
+                    //- span(
+                    //-   '[innerHTML]'='room.description'
+                    //- )
         mwl-calendar-day-view(
           *ngSwitchCase='"day"'
           '[viewDate]'='viewDate'

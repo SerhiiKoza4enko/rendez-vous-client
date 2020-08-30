@@ -20,6 +20,7 @@ import * as jQuery from 'jquery';
 import { LocalStorageService } from 'ng2-webstorage';
 
 import { BookingModalComponent } from '../booking-modal/booking-modal.component';
+import { RoomModalComponent } from '../room-modal/room-modal.component';
 import { BookingService } from '../../services/booking';
 import { RoomService } from '../../services/room';
 
@@ -54,7 +55,7 @@ export class BookingComponent implements OnInit {
   public bookings: IBooking[];
   public weekStartsOn: number = 1;
   public view: string = 'month';
-  public startHours: number = 8;
+  public startHours: number = 9;
   public endHours: number = 20;
   public dayModifier: Function;
   public color: any = { primary: 'blue', secondary: '' };
@@ -247,6 +248,11 @@ export class BookingComponent implements OnInit {
     this.selectedRoom = room;
     this.fillDayEvents();
     this.view = 'day';
+  }
+
+  public openRoomInfo(room: IRoom): void {
+    const modalRef = this.modalService.open(RoomModalComponent);
+    modalRef.componentInstance.room = room;
   }
 
   private removeBooking(booking: IBooking, removeAll: boolean): void {

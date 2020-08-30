@@ -1,0 +1,23 @@
+section.room-modal.portfolio-modal(tjsMaterialize)
+  form
+    .modal-header
+      h4.modal-title
+        span
+          | {{ room.name }}
+    .modal-body
+      .form-group.label-floating
+        span Площадь: {{ room.square }}
+      .form-group.label-floating
+        span Количество человек: {{ room.capacity }}
+      .form-group.label-floating
+        label.control-label(for='description') Описание
+        span('[innerHTML]'='room.description')
+    .modal-footer
+      button.btn.btn-secondary(
+        type='button'
+        role='button'
+        '(click)'='modalInstance.dismiss()'
+      )
+        i.fa.fa-fw.fa-ban
+        | &nbsp;
+        | Закрыть

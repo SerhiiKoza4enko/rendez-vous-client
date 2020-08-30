@@ -21,6 +21,7 @@ import { ForeignsComponent } from './components/foreigns';
 import { ForeignModalComponent } from './components/foreign-modal';
 import { ArticleViewComponent } from './components/article-view';
 import { GalleryComponent } from './components/gallery';
+import { RoomModalComponent } from './components/room-modal';
 
 import { FeedbackService } from './services/feedback';
 import { ContactService } from './services/contact';
@@ -53,7 +54,8 @@ import { PhotoService } from './services/photo';
     ForeignsComponent,
     ForeignModalComponent,
     ArticleViewComponent,
-    GalleryComponent
+    GalleryComponent,
+    RoomModalComponent
   ],
   declarations: [
     LayoutComponent,
@@ -71,7 +73,8 @@ import { PhotoService } from './services/photo';
     ForeignsComponent,
     ForeignModalComponent,
     ArticleViewComponent,
-    GalleryComponent
+    GalleryComponent,
+    RoomModalComponent
   ],
   providers: [
     FeedbackService,
@@ -89,7 +92,8 @@ import { PhotoService } from './services/photo';
     ProfileComponent,
     FeedbackModalComponent,
     ForeignModalComponent,
-    BookingModalComponent
+    BookingModalComponent,
+    RoomModalComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
