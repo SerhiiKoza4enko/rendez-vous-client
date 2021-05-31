@@ -1,6 +1,6 @@
 interface IBooking {
   id?: number,
-  start_time: Date
+  start_time: Date,
   end_time: Date,
   title: string,
   periodic: boolean,
@@ -9,5 +9,7 @@ interface IBooking {
   period_end: Date,
   period_id: string,
   user: IUser,
-  room: string | IRoom
+  room: string | IRoom,
+  is_deleted: boolean,
+  date_deleted: Date
 }

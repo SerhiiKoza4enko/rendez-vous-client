@@ -118,16 +118,20 @@ export class BookingComponent implements OnInit {
     })
       .$observable
       .subscribe((bookings: IBooking[]) => {
-        this.bookings = bookings.map((item: IBooking) => {
-          item.start_time = moment(item.start_time.toString().split('+')[0]).toDate();
-          item.end_time = moment(item.end_time.toString().split('+')[0]).toDate();
-          item.days_of_week =
-            item.days_of_week && item.days_of_week.length
-              ? (<string> item.days_of_week).split(',')
-                .map((day: string) => { return parseInt(day, 0); })
-              : [];
-          return item;
-        }) || [];
+        this.bookings = bookings
+          .filter((item: IBooking) => {
+            return !item.is_deleted;
+          })
+          .map((item: IBooking) => {
+            item.start_time = moment(item.start_time.toString().split('+')[0]).toDate();
+            item.end_time = moment(item.end_time.toString().split('+')[0]).toDate();
+            item.days_of_week =
+              item.days_of_week && item.days_of_week.length
+                ? (<string> item.days_of_week).split(',')
+                  .map((day: string) => { return parseInt(day, 0); })
+                : [];
+            return item;
+          }) || [];
         this.fillEvents();
       });
   }

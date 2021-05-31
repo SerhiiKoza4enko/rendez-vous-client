@@ -133,7 +133,7 @@ export class AdminBookingComponent implements OnInit {
     }
     let date: Date = event.date;
     let todaysBookings = this.bookings.filter((b: IBooking) => {
-      return moment(b.start_time).startOf('month').isSame(moment(date).startOf('month'));
+      return moment(b.start_time).startOf('month').isSame(moment(date).startOf('month')) && !b.is_deleted;
     });
     let minTime: moment.Moment = moment(date).hour(this.startHours).minute(0).second(0);
     let maxTime: moment.Moment = moment(date).hour(this.endHours + 1).minute(0).second(0);
@@ -160,6 +160,9 @@ export class AdminBookingComponent implements OnInit {
 
   public eventClicked(event: any): void {
     let booking: IBooking = event.event.booking;
+    if (booking.is_deleted) {
+      return;
+    }
     this.timeSelect({ date: booking.start_time }, booking);
   }
 
@@ -288,10 +291,13 @@ export class AdminBookingComponent implements OnInit {
           + ' - '
           + moment(item.end_time).format('HH:mm')
           + ' '
-          + item.title,
+          + item.title
+          + (item.is_deleted ?
+            ' (Отменено ' + moment(item.date_deleted).format('DD.MM.YYYY HH:mm') + ')'
+           : ''),
         color: {
-          primary: this.hexToRgb((<IRoom> item.room).color, 1),
-          secondary: this.hexToRgb((<IRoom> item.room).color, 0.5)
+          primary: this.hexToRgb(item.is_deleted ? '#000000' : (<IRoom> item.room).color, 1),
+          secondary: this.hexToRgb(item.is_deleted ? '#000000' : (<IRoom> item.room).color, 0.5)
         }
       };
       return event;
@@ -302,7 +308,7 @@ export class AdminBookingComponent implements OnInit {
   private fillDayEvents(): void {
     this.dayEvents = this.bookings
       .filter((item: IBooking) => {
-        return (<IRoom> item.room).id === this.selectedRoom.id;
+        return (<IRoom> item.room).id === this.selectedRoom.id && !item.is_deleted;
       })
       .map((item: IBooking) => {
         let event: BookingCalendarEvent = {
@@ -321,10 +327,41 @@ export class AdminBookingComponent implements OnInit {
             primary: this.hexToRgb((<IRoom> item.room).color, 1),
             secondary: this.hexToRgb((<IRoom> item.room).color, 0.5)
           },
-          actions: this.actions
+          actions: item.is_deleted ? null : this.actions,
+          cssClass: item.is_deleted ? 'deleted_action' : ''
         };
         return event;
       });
+    let deletedBookings = this.bookings
+      .filter((item: IBooking) => {
+        return (<IRoom> item.room).id === this.selectedRoom.id && item.is_deleted;
+      });
+    deletedBookings.forEach((item: IBooking) => {
+      this.dayEvents.push({
+        booking: item,
+        start: item.start_time,
+        end: item.end_time,
+        title: (item.user.id === this.user.id ? 'Я' :
+            item.user.lastname
+            + ' '
+            + item.user.firstname
+            + ' ('
+            + item.user.phone
+            + ')')
+            + ' - '
+            + moment(item.start_time).format('HH:mm')
+            + ' - '
+            + moment(item.end_time).format('HH:mm')
+            + (item.title && item.title.length ? ' - ' + item.title : '')
+            + ' - Отменено ' + moment(item.date_deleted).format('DD.MM.YYYY в HH:mm'),
+        color: {
+          primary: '#1e90ff',
+          secondary: '#D1E8FF'
+        },
+        allDay: true,
+        actions: null
+      } as BookingCalendarEvent);
+    });
     this._loadCompleted = true;
   }
 
